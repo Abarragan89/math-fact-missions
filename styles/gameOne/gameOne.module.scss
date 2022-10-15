@@ -1,0 +1,139 @@
+.mainStudyPage {
+    background: url("/background.png") no-repeat center center fixed;
+    -webkit-background-size: 100%;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 100vh;
+    color: white;
+    
+    p {
+        margin: 0;
+        padding-top: 5px;
+        text-align: center;
+
+    }
+    .lives {
+        font-size: 1.5em;
+    }
+    .problem{
+        font-size: 1.8em;
+        padding-top: 0;
+        text-align: center;
+    }
+
+    canvas {
+        display: block;
+        margin: 0 auto;
+        border-radius: 20px;
+        border: 7px solid rgba(255, 255, 255, 0.22);
+        background-color: rgba(23, 117, 23, 0.15);
+    }
+    .controls {
+        text-align: center;
+        width: 340px;
+        margin: auto;
+        border: 7px solid rgba(255, 255, 255, 0.22);
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        button {
+            padding: 7px 20px;
+            background-color: rgba(250, 24, 67, 0.507);
+            display: inline-block;
+            border: 1px solid black;
+            color: white;
+            font-size: 1.1em;
+        }
+        input {
+            margin-right: 30px;
+            background-color: transparent;
+        }
+        input[type=range] {
+            height: 14px;
+            -webkit-appearance: none;
+            margin: 10px 0;
+            width: 100%;
+          }
+          input[type=range]:focus {
+            outline: none;
+          }
+          input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 12px;
+            cursor: pointer;
+            box-shadow: 1px 1px 1px #002200;
+            background: #205928;
+            border-radius: 1px;
+            border: 1px solid #18D501;
+          }
+          input[type=range]::-webkit-slider-thumb {
+            box-shadow: 3px 3px 3px #00AA00;
+            border: 2px solid #83E584;
+            height: 33px;
+            width: 23px;
+            border-radius: 23px;
+            background: #439643;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -10px;
+          }
+          input[type=range]:focus::-webkit-slider-runnable-track {
+            background: #205928;
+          }
+          input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 12px;
+            cursor: pointer;
+            box-shadow: 1px 1px 1px #002200;
+            background: #205928;
+            border-radius: 1px;
+            border: 1px solid #18D501;
+          }
+          input[type=range]::-moz-range-thumb {
+            box-shadow: 3px 3px 3px #00AA00;
+            border: 2px solid #83E584;
+            height: 33px;
+            width: 23px;
+            border-radius: 23px;
+            background: #439643;
+            cursor: pointer;
+          }
+          input[type=range]::-ms-track {
+            width: 100%;
+            height: 12px;
+            cursor: pointer;
+            background: transparent;
+            border-color: transparent;
+            color: transparent;
+          }
+          input[type=range]::-ms-fill-lower {
+            background: #205928;
+            border: 1px solid #18D501;
+            border-radius: 2px;
+            box-shadow: 1px 1px 1px #002200;
+          }
+          input[type=range]::-ms-fill-upper {
+            background: #205928;
+            border: 1px solid #18D501;
+            border-radius: 2px;
+            box-shadow: 1px 1px 1px #002200;
+          }
+          input[type=range]::-ms-thumb {
+            margin-top: 1px;
+            box-shadow: 3px 3px 3px #00AA00;
+            border: 2px solid #83E584;
+            height: 33px;
+            width: 23px;
+            border-radius: 23px;
+            background: #439643;
+            cursor: pointer;
+          }
+          input[type=range]:focus::-ms-fill-lower {
+            background: #205928;
+          }
+          input[type=range]:focus::-ms-fill-upper {
+            background: #205928;
+          }
+          
+    }
+}

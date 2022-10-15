@@ -1,0 +1,33 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p $PORT",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "mongodb": "4.8.1",
+    "next": "^12.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^6.3.0",
+    "sass": "^1.54.9",
+    "swiper": "^8.4.3",
+    "use-sound": "^4.0.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.14",
+    "@types/react": "^18.0.17",
+    "@types/uuid": "^8.3.4",
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5",
+    "file-loader": "^6.2.0",
+    "typescript": "^4.8.2",
+    "url-loader": "^4.1.1"
+  }
+}

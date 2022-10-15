@@ -1,0 +1,46 @@
+@import '../colorsFonts.module.scss';
+
+.message {
+  color: rgba(17, 129, 121, 0.943);
+  font-size: .8em;
+}
+
+.controls {
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+
+  input {
+    width: 25%;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    border: 0;
+    font-size: 2em;
+    color: $secondaryColor;
+    height: 55px;
+    font-weight: bold;
+    background-color: rgba(17, 129, 121, 0.943);
+    border-radius: 0 0 0 8px;
+  }
+
+  button {
+    background-color: rgba(175, 26, 26, 0.882);
+    color: white;
+    height: 55px;
+    width: 78px;
+    border: 0;
+    border-radius: 0 0 8px 0;
+    font-size: 1.2em;
+    letter-spacing: .4em;
+  }
+  
+  button:hover {
+    cursor: pointer;
+    color: yellow;
+  }
+  button:active {
+    color: black
+  }
+  
+}
