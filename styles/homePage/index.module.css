@@ -34,7 +34,6 @@
   cursor: pointer;
 }
 .homepageMain .continueGameDiv .gameInfoDiv p {
-  text-transform: capitalize;
   font-size: 1.7em;
 }
 .homepageMain .continueGameDiv button {

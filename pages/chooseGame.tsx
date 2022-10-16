@@ -29,7 +29,7 @@ function ChooseGame() {
                 const db = request.result
                 const transaction = db.transaction('activeGames', 'readonly')
                     .objectStore('activeGames')
-                    .index('player_name');
+                    .index('display_name');
                 const keyRange = IDBKeyRange.only(username);
 
                 // Set up the request query

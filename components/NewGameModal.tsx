@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import styles from '../styles/newGameModal/newGameModal.module.css';
 import styles2 from '../styles/chooseGame/chooseGame.module.css';
 import useSound from 'use-sound';
+import clientPromise from '../lib/mongodb';
 
 function NewGameModal({ modalTriggered, setModalTriggered }) {
     // Set up Sound
@@ -18,6 +18,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
 
     // save user data to indexedDB
     async function addNewUserGame(name: string, e?) {
+        name = name.trim();
         if (e) {
             e.preventDefault()
         }
@@ -32,19 +33,22 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
             const transaction = db.transaction('activeGames', 'readwrite');
             const store = transaction.objectStore('activeGames');
             // check to see if name already exists
-            const searchIndex = store.index('player_name');
-            searchIndex.get(name.toLowerCase()).onsuccess = (event) => {
+            const searchIndex = store.index('name');
+            searchIndex.get(name.toLowerCase().trim()).onsuccess = (event) => {
                 if ((event.target as IDBRequest).result) {
                     setIsSuccessful(false)
                     inputEl.current.select();
                     errorText.current.innerHTML = 'Sorry, that name is already taken'
-                    console.log('did not create')
+                } else if (name === '') {
+                    setIsSuccessful(false)
+                    inputEl.current.select();
+                    errorText.current.innerHTML = 'You need to enter a name'
                 } else {
                     setIsSuccessful(true)
                     // Adding Data
                     store.put({
-                        id: uuidv4(),
-                        name: name.toLowerCase(),
+                        display_name: name.trim(),
+                        name: name.toLowerCase().trim(),
                         games:
                             [{
                                 operations: 'multiplication',
@@ -85,10 +89,9 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                                 game2Highscore: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                                 game3Highscore: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
-                            }
-                            ]
+                            }]
                     })
-                    window.location.replace(`/chooseGame?username=${username}`)
+                    window.location.replace(`/chooseGame?username=${name}`)
                 }
             }
         }
@@ -99,6 +102,19 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         inputEl.current.focus();
     }, [])
 
+    // add user to MongoDB database
+    async function newUserToMongo (username: string) {
+       const data = await fetch(`http://localhost:3000/api/addNewUser?name=${username}`, {
+        method: "POST",
+        body: JSON.stringify(username),
+        headers:
+        {
+            "Content-Type": "application/json"
+        }
+       })
+       const res = await data.json();
+       console.log(res)
+    }
     return (
         <section className={`${styles.modalContainer}`}>
             <div>
@@ -121,7 +137,8 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                     type='submit'
                     onClick={(e) => {
                         play();
-                        addNewUserGame(username, e);
+                        // addNewUserGame(username, e);
+                        newUserToMongo(username);
                     }}
                     className='mainButton mt-5 mb-5'
                 ><span>Let&apos;s Go!</span></button>

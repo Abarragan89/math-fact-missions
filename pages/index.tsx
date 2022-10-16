@@ -7,6 +7,7 @@ import useSound from 'use-sound';
 import NewGameModal from '../components/NewGameModal';
 
 function HomePage() {
+
     const [play] = useSound('/sounds/buttonClick.wav', {
         volume: .3
     })
@@ -22,8 +23,9 @@ function HomePage() {
         // Schema
         request.onupgradeneeded = () => {
             const db = request.result;
-            const store = db.createObjectStore('activeGames', { keyPath: 'id' });
-            store.createIndex('player_name', 'name', { unique: true });
+            const store = db.createObjectStore('activeGames', { keyPath: 'name' });
+            store.createIndex('display_name', 'display_name', {unique: true })
+            store.createIndex('name', 'name', { unique: true });
             store.createIndex('games', ['games'])
         }
     }, [])
@@ -31,12 +33,12 @@ function HomePage() {
     const [initiateNewGame, setInitiateNewGame] = useState<boolean>(false)
     const [modalTriggered, setModalTriggered] = useState<Boolean>(false)
 
+
     return (
         <>
             <Head>
                 <title>Math Fact Missions</title>
             </Head>
-
             {initiateNewGame &&
                 <NewGameModal
                     modalTriggered={initiateNewGame}

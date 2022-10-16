@@ -316,7 +316,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
             const transaction = db.transaction('activeGames', 'readwrite')
             const objectStore = transaction.objectStore('activeGames')
             // target specific field for search
-            const searchIndex = objectStore.index('player_name');
+            const searchIndex = objectStore.index('display_name');
             searchIndex.get(username).onsuccess = function (event) {
                 const obj = ((event.target as IDBRequest).result);
                 // set the highscore or final highscore
@@ -356,7 +356,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                 const transaction = db.transaction('activeGames', 'readwrite')
                 const objectStore = transaction.objectStore('activeGames')
                 // target specific field for search
-                const searchIndex = objectStore.index('player_name');
+                const searchIndex = objectStore.index('display_name');
                 searchIndex.get(username).onsuccess = function (event) {
                     if (gameType === 'multiplication') {
                         setHighscore((event.target as IDBRequest).result.games[0].game3Highscore[numberRange - 1])

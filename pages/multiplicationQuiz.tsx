@@ -48,7 +48,7 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
                 const transaction = db.transaction('activeGames', 'readwrite')
                 const objectStore = transaction.objectStore('activeGames')
                 // target specific field for search
-                const searchIndex = objectStore.index('player_name');
+                const searchIndex = objectStore.index('display_name');
                 searchIndex.get(username).onsuccess = function (event) {
                     if (gameType === 'multiplication') {
                         setPassedLevels((event.target as IDBRequest).result.games[0].level)
@@ -198,7 +198,7 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
             const transaction = db.transaction('activeGames', 'readwrite')
             const objectStore = transaction.objectStore('activeGames')
             // target specific field for search
-            const searchIndex = objectStore.index('player_name');
+            const searchIndex = objectStore.index('display_name');
             searchIndex.get(username).onsuccess = function (event) {
                 if (gameType === 'multiplication') {
                     const obj = ((event.target as IDBRequest).result);
