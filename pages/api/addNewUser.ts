@@ -5,8 +5,7 @@ export default async function handler(req, res) {
         const name = req.body
         const client = await clientPromise;
         const db = client.db('math-fact-missions');
-        
-        const addNewUser = await db
+        await db
             .collection('math-fact-missions')
             .insertOne({
                 displayName: name,

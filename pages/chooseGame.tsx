@@ -51,7 +51,7 @@ function ChooseGame() {
                             inGame={false}
                         />
 
-                        <Link href='/'><p onClick={() => play()} className={styles.hollowBtn}>Back</p></Link>
+                        <Link href='/continueGame'><p onClick={() => play()} className={styles.hollowBtn}>Back</p></Link>
                         <div className='flex-box-sa-wrap'>
                         <Link href={`/friends?username=${username}`}><p onClick={() => play()} className={styles.hollowBtn}>Friends</p></Link>
                         <Link href='/'><p onClick={() => play()} className={styles.hollowBtn}>Leaderboards</p></Link>

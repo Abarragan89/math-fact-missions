@@ -111,15 +111,15 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 "Content-Type": "application/json"
             }
         })
-        const res = await data.json();
     }
     return (
         <section className={`${styles.modalContainer}`}>
             <div>
                 <h2>Enter Name</h2>
-                <form className={styles.formEl} onSubmit={(e) => {
+                <form className={styles.formEl} onSubmit={ async (e) => {
                     play();
-                    addNewUserGame(username, e);
+                    await newUserToMongo(username);
+                    addNewUserGame(username);
                 }}>
                     <input
                         onChange={(e) => setUsername(e.target.value)}
@@ -133,10 +133,10 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 <br />
                 <button
                     type='submit'
-                    onClick={(e) => {
+                    onClick={ async (e) => {
                         play();
+                        await newUserToMongo(username);
                         addNewUserGame(username, e);
-                        newUserToMongo(username);
                     }}
                     className='mainButton mt-5 mb-5'
                 ><span>Let&apos;s Go!</span></button>

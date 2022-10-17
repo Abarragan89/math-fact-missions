@@ -17,10 +17,10 @@ function Friends() {
     const { username } = router.query
 
     const inputEl = useRef(null)
-    const [friendName, setFriendName] = useState<string>('');
+    const friendName = useRef<string>('')
     const [friendFound, setFriendFound] = useState(null);
-    const [currentFriends, setCurrentFriends] = useState(null);
-    const [user, setUser] = useState(null)
+    const [addedFriend, setAddedFriend] = useState<number>(0);
+    const [user, setUser] = useState(null);
 
     async function searchMongo(searchName) {
         searchName = searchName.toLowerCase();
@@ -47,19 +47,17 @@ function Friends() {
         const res = await data.json();
         setUser(res);
     }
+    console.log('user', user)
 
     async function searchFriends(e) {
-        setFriendName(e.target.value)
-        setFriendFound(await searchMongo(friendName))
+        friendName.current = e.target.value
+        setFriendFound(await searchMongo(friendName.current))
     }
     useEffect(() => {
         if (username) {
             getUserData(username)
         }
-    }, [username])
-
-    // console.log(user.friends)
-
+    }, [username, addedFriend])
 
     async function addFriend(username, friendName) {
         friendName = friendName.toLowerCase();
@@ -74,6 +72,32 @@ function Friends() {
                 "Content-Type": "application/json"
             }
         })
+        setAddedFriend(addedFriend + 1)
+    }
+
+    async function removeFriendMongoDB(friendName: string, username) {
+        friendName = friendName.toLowerCase();
+        await fetch(`http://localhost:3000/api/deleteFriend`, {
+            method: "PUT",
+            body: JSON.stringify({
+                username,
+                friendName
+            }),
+            headers:
+            {
+                "Content-Type": "application/json"
+            }
+        })
+        setAddedFriend(addedFriend + 1)
+
+    }
+
+    function removeFriend(friendName: string) {
+        const message = 'Are you sure you want to remove this friend? This is irreversible.'
+        const confirmation = confirm(message)
+        if (confirmation) {
+            removeFriendMongoDB(friendName, username)
+        }
     }
 
     return (
@@ -87,16 +111,22 @@ function Friends() {
             <div className='flex-box-sa'>
                 {/* Search Div */}
                 <div className={styles.searchFriendDiv}>
-                    <input
-                        onChange={(e) => searchFriends(e)}
-                        type="text"
-                        ref={inputEl}
-                    />
-                    <button onClick={(e) => searchFriends(e)}>Find</button>
+                    <div className='flex-box-sb'>
+                        <input
+                            onChange={(e) => searchFriends(e)}
+                            type="text"
+                            ref={inputEl}
+                        />
+                        <button onClick={(e) => searchFriends(e)}>Find</button>
+                    </div>
                     {friendFound && user &&
                         <div className='flex-box-sb'>
                             <p className={styles.foundFriend}>{friendFound.name}</p>
-                            <button className={styles.addFriendBtn} onClick={() => addFriend(user.name, friendFound.name)}>Add</button>
+                            {user.friends.includes(friendFound) ?
+                                <p onClick={() => addFriend(user.name, friendFound.name)}>Friended</p>
+                                :
+                                <button className={styles.addFriendBtn} onClick={() => addFriend(user.name, friendFound.name)}>Add</button>
+                            }
                         </div>
                     }
                 </div>
@@ -106,10 +136,11 @@ function Friends() {
                     <h2 className={styles.subtitle}>Friends</h2>
                     {user &&
                         user.friends.map((friend: string, index: number) =>
-                            <div>
+                            <div key={index}>
                                 <ul>
                                     <div className={styles.friendList} key={index}>
                                         <li>{friend}</li>
+                                        <button onClick={() => removeFriend(friend)}>Remove</button>
                                     </div>
                                 </ul>
                             </div>

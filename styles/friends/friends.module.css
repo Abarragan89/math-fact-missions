@@ -10,11 +10,14 @@
 }
 
 .searchFriendDiv input {
-  width: 50%;
   font-size: 1.1em;
   padding: 5px;
   background-color: rgb(98, 98, 98);
   color: #f7ff0f;
+}
+.searchFriendDiv p {
+  color: white;
+  margin-left: 5px;
 }
 .searchFriendDiv .addFriendBtn {
   margin: 10px 0;

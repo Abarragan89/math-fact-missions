@@ -15,12 +15,14 @@
 
 .searchFriendDiv {
     input {
-        width: 50%;
         font-size: 1.1em;
         padding: 5px;
         background-color: $accentColor;
         color: $secondaryColor
-        
+    }
+    p {
+        color: white;
+        margin-left: 5px;
     }
     button {
         

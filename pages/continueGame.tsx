@@ -61,13 +61,24 @@ function ContinueGame() {
         }
 
     }
-    function confirmDelete(e, username: string ) {
+    async function confirmDelete(e, username: string ) {
         const message = 'Are you sure you want to delete? This is irreversible.'
         const confirmation = confirm(message)
         if(confirmation) {
             deleteGameSound();
+            deleteUserFromMongo(username.toLowerCase())
             deleteGame(e, username.toLowerCase())
         }
+    }
+    async function deleteUserFromMongo(username: string) {
+        await fetch(`http://localhost:3000/api/deleteUser`, {
+            method: "DELETE",
+            body: JSON.stringify({name: username}),
+            headers:
+            {
+                "Content-Type": "application/json"
+            }
+        })
     }
 
     return (
