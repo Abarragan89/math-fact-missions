@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import styles from '../styles/newGameModal/newGameModal.module.css';
 import styles2 from '../styles/chooseGame/chooseGame.module.css';
 import useSound from 'use-sound';
-import clientPromise from '../lib/mongodb';
 
 function NewGameModal({ modalTriggered, setModalTriggered }) {
     // Set up Sound
@@ -103,17 +102,16 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
     }, [])
 
     // add user to MongoDB database
-    async function newUserToMongo (username: string) {
-       const data = await fetch(`http://localhost:3000/api/addNewUser?name=${username}`, {
-        method: "POST",
-        body: JSON.stringify(username),
-        headers:
-        {
-            "Content-Type": "application/json"
-        }
-       })
-       const res = await data.json();
-       console.log(res)
+    async function newUserToMongo(username: string) {
+        const data = await fetch(`http://localhost:3000/api/addNewUser`, {
+            method: "POST",
+            body: JSON.stringify(username),
+            headers:
+            {
+                "Content-Type": "application/json"
+            }
+        })
+        const res = await data.json();
     }
     return (
         <section className={`${styles.modalContainer}`}>
@@ -137,7 +135,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                     type='submit'
                     onClick={(e) => {
                         play();
-                        // addNewUserGame(username, e);
+                        addNewUserGame(username, e);
                         newUserToMongo(username);
                     }}
                     className='mainButton mt-5 mb-5'

@@ -52,9 +52,9 @@ export default async function handler(req, res) {
                                 game3Highscore: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
                             }],
-                            friends: [[]]
+                            
+                friends: []
             })
-            console.log(addNewUser)
     } catch(e) {
         console.log(e);
     }

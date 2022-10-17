@@ -1,0 +1,26 @@
+/* Global colors */
+.friendList li {
+  margin-top: 10px;
+  color: white;
+  list-style: none;
+}
+.friendList h2 {
+  margin: 10px 10px 0;
+  color: #f7ff0f;
+}
+
+.searchFriendDiv input {
+  width: 50%;
+  font-size: 1.1em;
+  padding: 5px;
+  background-color: rgb(98, 98, 98);
+  color: #f7ff0f;
+}
+.searchFriendDiv .addFriendBtn {
+  margin: 10px 0;
+}
+
+.subtitle {
+  margin-top: 0;
+  color: white;
+}/*# sourceMappingURL=friends.module.css.map */
