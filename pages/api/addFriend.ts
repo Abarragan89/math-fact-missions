@@ -3,9 +3,9 @@ import clientPromise from '../../lib/mongodb'
 export default async function handler(req, res) {
     try {
         const data = req.body
+        console.log(data)
         if (data.username === data.friendName) {
             throw new Error("You can't befriend yourself")
-            return;
         }
         const client = await clientPromise;
         const db = client.db('math-fact-missions');

@@ -116,9 +116,9 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         <section className={`${styles.modalContainer}`}>
             <div>
                 <h2>Enter Name</h2>
-                <form className={styles.formEl} onSubmit={ async (e) => {
+                <form className={styles.formEl} onSubmit={(e) => {
                     play();
-                    await newUserToMongo(username);
+                    newUserToMongo(username);
                     addNewUserGame(username);
                 }}>
                     <input
@@ -133,9 +133,9 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 <br />
                 <button
                     type='submit'
-                    onClick={ async (e) => {
+                    onClick={(e) => {
                         play();
-                        await newUserToMongo(username);
+                        newUserToMongo(username);
                         addNewUserGame(username, e);
                     }}
                     className='mainButton mt-5 mb-5'
