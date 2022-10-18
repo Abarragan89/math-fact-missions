@@ -1,1 +1,1 @@
-{"version":3,"sources":["leaderBoard.module.scss","leaderBoard.module.css"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;ACCJ;ADCI;EACI,gBAAA;EACA,mBAAA;ACCR","file":"leaderBoard.module.css"}
+{"version":3,"sources":["../colorsFonts.module.scss","leaderBoard.module.scss","leaderBoard.module.css"],"names":[],"mappings":"AAAA,kBAAA;ACEA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;ACAJ;ADEI;EACI,gBAAA;EACA,mBAAA;ACAR;;ADIA;EACI,YAAA;EACA,cAAA;EACA,gBAAA;EACA,UAAA;EACA,iCDdU;AEad;ADGI;EACI,gBAAA;EACA,uBAAA;ACDR;ADGI;EACI,WAAA;ACDR","file":"leaderBoard.module.css"}

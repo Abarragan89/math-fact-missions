@@ -1,3 +1,4 @@
+/* Global colors */
 .mainButtonDiv {
   display: flex;
   flex-direction: column;
@@ -6,4 +7,19 @@
 .mainButtonDiv button:first-child {
   margin-top: 40px;
   margin-bottom: 30px;
+}
+
+.scoreBoard {
+  color: white;
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 90%;
+  background-color: rgb(98, 98, 98);
+}
+.scoreBoard .scoreboardRow {
+  font-size: 1.2em;
+  border: 1px solid white;
+}
+.scoreBoard .scoreboardRow:first-child {
+  color: gold;
 }/*# sourceMappingURL=leaderBoard.module.css.map */

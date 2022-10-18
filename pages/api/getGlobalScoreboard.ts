@@ -3,29 +3,48 @@ import  clientPromise  from '../../lib/mongodb'
 export default async function handler(req, res) {
     try {
         const client = await clientPromise;
+        const game = await req.query.gameType
         const db = client.db('math-fact-missions');
-        const games = await db
-            .collection('math-fact-missions')
-            .aggregate([
+        if(game === 'finalHighscore') {
+            const gameLevel = `games.${req.query.gameType}`
 
-                { $unwind: '$games'},
-
-                { $match: {
-                    "games.operations": "multiplication" 
-                }},
-
-                { $unwind: '$games.game1Highscore'},
-
-                { $sort: { 'games.game1Highscore.0': - 1} },  
-
-                { $project: {
-                    "displayName": 1,
-                    'games.game1Highscore':  1,
-                }}
-            ])
-            .toArray()
-        console.log(games)
-        res.json(games)
+            const games = await db
+                .collection('math-fact-missions')
+                .aggregate([
+                    { $unwind: '$games'},
+                    { $match: {
+                        "games.operations": req.query.operation 
+                    }},
+                    { $unwind: `$games.${game}`},
+                    { $sort: { [gameLevel]: - 1} },  
+                    { $project: {
+                        "displayName": 1,
+                        [gameLevel]:  1,
+                    }}
+                ])
+                .toArray()
+                console.log(games)
+                res.json(games)
+        } else {
+            const gameLevel = `games.${req.query.gameType}.${req.query.level}`
+            const games = await db
+                .collection('math-fact-missions')
+                .aggregate([
+                    { $unwind: '$games'},
+                    { $match: {
+                        "games.operations": req.query.operation 
+                    }},
+                    { $unwind: `$games.${game}`},
+                    { $sort: { [gameLevel]: - 1} },  
+                    { $project: {
+                        "displayName": 1,
+                        [gameLevel]:  1,
+                    }}
+                ])
+                .toArray()
+                console.log(games)
+                res.json(games)
+        }
     } catch(e) {
         console.log(e);
     }
