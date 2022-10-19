@@ -16,11 +16,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
 
 
     // save user data to indexedDB
-    async function addNewUserGame(name: string, e?) {
-        name = name.trim();
-        if (e) {
-            e.preventDefault()
-        }
+    async function addNewUserGame(name: string) {
         const indexedDB = window.indexedDB;
         const request = indexedDB.open('GameDatabase', 1);
         request.onerror = function (event) {
@@ -101,16 +97,40 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         inputEl.current.focus();
     }, [])
 
+
+
     // add user to MongoDB database
-    async function newUserToMongo(username: string) {
-        const data = await fetch(`http://localhost:3000/api/addNewUser`, {
+    async function newUserToMongo(name: string, e?) {
+        name = name.trim();
+        if (e) {
+            e.preventDefault()
+        } else if (name === '') {
+            setIsSuccessful(false)
+            inputEl.current.select();
+            errorText.current.innerHTML = 'You need to enter a name';
+            return;
+        }
+        // check to see if name is available in Database
+        const fetchRequest = await fetch(`http://localhost:3000/api/addNewUser`, {
             method: "POST",
-            body: JSON.stringify(username),
+            body: JSON.stringify(name),
             headers:
             {
                 "Content-Type": "application/json"
             }
         })
+        const data = await fetchRequest.json();
+        // If name is not available, then fail and send message
+        if (data.successful === false) {
+            setIsSuccessful(false)
+            inputEl.current.select();
+            errorText.current.innerHTML = 'Sorry, that name is already taken'
+        } else {
+        // If name is available, then save it to indexedDB
+            setIsSuccessful(true)
+            await addNewUserGame(name)
+            window.location.replace(`/chooseGame?username=${name}`)
+        }
     }
     return (
         <section className={`${styles.modalContainer}`}>
@@ -118,8 +138,8 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 <h2>Enter Name</h2>
                 <form className={styles.formEl} onSubmit={(e) => {
                     play();
-                    newUserToMongo(username);
-                    addNewUserGame(username);
+                    newUserToMongo(username, e);
+                    // addNewUserGame(username, e);
                 }}>
                     <input
                         onChange={(e) => setUsername(e.target.value)}
@@ -135,8 +155,11 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                     type='submit'
                     onClick={(e) => {
                         play();
-                        newUserToMongo(username);
-                        addNewUserGame(username, e);
+                        newUserToMongo(username, e)
+                            .then(movies => {
+                                console.log(movies)
+                            });
+                        // addNewUserGame(username, e);
                     }}
                     className='mainButton mt-5 mb-5'
                 ><span>Let&apos;s Go!</span></button>
