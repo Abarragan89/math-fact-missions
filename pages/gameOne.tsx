@@ -378,24 +378,28 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
             searchIndex.get(username).onsuccess = function (event) {
                 const obj = ((event.target as IDBRequest).result);
                 // set the highscore or final highscore
-                if(gameType === 'multiplication') {
+                if (gameType === 'multiplication') {
                     if (score.current > obj.games[0].game1Highscore[numberRange - 1]) {
                         obj.games[0].game1Highscore[numberRange - 1] = score.current
+                        addScoresToMongoDB();
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'division') {
                     if (score.current > obj.games[1].game1Highscore[numberRange - 1]) {
                         obj.games[1].game1Highscore[numberRange - 1] = score.current
+                        addScoresToMongoDB();
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'addition') {
                     if (score.current > obj.games[2].game1Highscore[numberRange / 10 - 1]) {
                         obj.games[2].game1Highscore[numberRange / 10 - 1] = score.current
+                        addScoresToMongoDB();
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'subtraction') {
                     if (score.current > obj.games[3].game1Highscore[numberRange / 10 - 1]) {
                         obj.games[3].game1Highscore[numberRange / 10 - 1] = score.current
+                        addScoresToMongoDB();
                         setNewHighscore(true)
                     }
                 }
@@ -425,7 +429,6 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
                         setHighscore((event.target as IDBRequest).result.games[2].game1Highscore[numberRange / 10 - 1])
                     } else if (gameType === 'subtraction') {
                         setHighscore((event.target as IDBRequest).result.games[3].game1Highscore[numberRange / 10 - 1])
-
                     }
                 }
             }
@@ -443,6 +446,44 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
         ))
     }
 
+    console.log(numberRange)
+
+    // Add score to MongoDB 
+    async function addScoresToMongoDB() {
+        let level: number;
+        // operation will be a number that points to its location in the database array
+        // Ex. [multiplication, division, addition, subtraction]
+        let operation:number;
+        // set the level to the name of the key in the game highscore object.
+        // use the number range to calculate this. 
+        if (gameType === 'multiplication') {
+            level = numberRange - 1;
+            operation = 0
+        } else if (gameType === 'division') {
+            level = numberRange - 1;
+            operation = 1
+        } else if (gameType === 'addition') {
+            level = numberRange / 10 - 1;
+            operation = 2
+        } else {
+            level = numberRange / 10 - 1;
+            operation = 3
+        }
+        await fetch(`http://localhost:3000/api/updateHighscore`, {
+            method: "PUT",
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                level,
+                operation,
+                game: 'game1Highscore',
+                highscore: score.current
+            }),
+        })
+    }
 
     return (
         <>
@@ -458,12 +499,12 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
                 <main className={styles.mainStudyPage}>
                     <div className='flex-box-sa'>
                         <p>Score: {score.current}</p>
-                            <p className={`${styles2.hollowBtn} ${styles.quitBtn}`}
-                                onClick={() => {
-                                    stopMusic();
-                                    window.location.reload();
-                                }}
-                            >Abort</p>
+                        <p className={`${styles2.hollowBtn} ${styles.quitBtn}`}
+                            onClick={() => {
+                                stopMusic();
+                                window.location.reload();
+                            }}
+                        >Abort</p>
                         <div className="flex-box-sb">
                             {lives.current.map((index) =>
                                 <p className={styles.lives} key={index}>🚀</p>
@@ -509,6 +550,7 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
                             <p>Highscore:{highscore}</p>
                         </div>
                     </div>
+                    <button onClick={addScoresToMongoDB}>Test Query</button>
                 </main>
 
             }

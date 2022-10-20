@@ -47,7 +47,7 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
                 const transaction = db.transaction('activeGames', 'readwrite')
                 const objectStore = transaction.objectStore('activeGames')
                 // target specific field for search
-                const searchIndex = objectStore.index('player_name');
+                const searchIndex = objectStore.index('name');
                 searchIndex.get(username).onsuccess = function (event) {
                     if (gameType === 'addition') {
                         setPassedLevels((event.target as IDBRequest).result.games[2].level)

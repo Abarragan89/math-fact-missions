@@ -58,7 +58,6 @@ function Friends() {
         const fullfilledPromise = await data.json()
         setRankings(fullfilledPromise)
     }
-    console.log(rankings)
 
     return (
         <main className={styles2.lobbyMain}>

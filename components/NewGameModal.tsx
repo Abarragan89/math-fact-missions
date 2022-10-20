@@ -100,36 +100,38 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
 
 
     // add user to MongoDB database
-    async function newUserToMongo(name: string, e?) {
+    async function newUserToMongo(name: string, e) {
         name = name.trim();
         if (e) {
             e.preventDefault()
-        } else if (name === '') {
+        } 
+        if (name === '') {
             setIsSuccessful(false)
             inputEl.current.select();
             errorText.current.innerHTML = 'You need to enter a name';
-            return;
-        }
-        // check to see if name is available in Database
-        const fetchRequest = await fetch(`http://localhost:3000/api/addNewUser`, {
-            method: "POST",
-            body: JSON.stringify(name),
-            headers:
-            {
-                "Content-Type": "application/json"
-            }
-        })
-        const data = await fetchRequest.json();
-        // If name is not available, then fail and send message
-        if (data.successful === false) {
-            setIsSuccessful(false)
-            inputEl.current.select();
-            errorText.current.innerHTML = 'Sorry, that name is already taken'
+            
         } else {
-        // If name is available, then save it to indexedDB
-            setIsSuccessful(true)
-            await addNewUserGame(name)
-            window.location.replace(`/chooseGame?username=${name}`)
+            // check to see if name is available in Database
+            const fetchRequest = await fetch(`http://localhost:3000/api/addNewUser`, {
+                method: "POST",
+                body: JSON.stringify(name),
+                headers:
+                {
+                    "Content-Type": "application/json"
+                }
+            })
+            const data = await fetchRequest.json();
+            // If name is not available, then fail and send message
+            if (data.successful === false) {
+                setIsSuccessful(false)
+                inputEl.current.select();
+                errorText.current.innerHTML = 'Sorry, that name is already taken'
+            } else {
+            // If name is available, then save it to indexedDB
+                setIsSuccessful(true)
+                await addNewUserGame(name)
+                window.location.replace(`/chooseGame?username=${name}`)
+            }
         }
     }
     return (
@@ -139,7 +141,6 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 <form className={styles.formEl} onSubmit={(e) => {
                     play();
                     newUserToMongo(username, e);
-                    // addNewUserGame(username, e);
                 }}>
                     <input
                         onChange={(e) => setUsername(e.target.value)}
@@ -156,10 +157,6 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                     onClick={(e) => {
                         play();
                         newUserToMongo(username, e)
-                            .then(movies => {
-                                console.log(movies)
-                            });
-                        // addNewUserGame(username, e);
                     }}
                     className='mainButton mt-5 mb-5'
                 ><span>Let&apos;s Go!</span></button>
