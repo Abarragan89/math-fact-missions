@@ -2,8 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import styles from '../styles/newGameModal/newGameModal.module.css';
 import styles2 from '../styles/chooseGame/chooseGame.module.css';
 import useSound from 'use-sound';
-const dotenv = require('dotenv');
-dotenv.config({ path: '../.env' });
 
 function NewGameModal({ modalTriggered, setModalTriggered }) {
     const PORT = process.env.PORT || 3000;
