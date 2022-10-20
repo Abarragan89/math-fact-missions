@@ -2,8 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import styles from '../styles/newGameModal/newGameModal.module.css';
 import styles2 from '../styles/chooseGame/chooseGame.module.css';
 import useSound from 'use-sound';
+const dotenv = require('dotenv');
+dotenv.config({ path: '../.env' });
 
 function NewGameModal({ modalTriggered, setModalTriggered }) {
+    const PORT = process.env.PORT || 3000;
     // Set up Sound
     const [play] = useSound('/sounds/buttonClick.wav', {
         volume: .3
@@ -97,7 +100,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         inputEl.current.focus();
     }, [])
 
-
+    
 
     // add user to MongoDB database
     async function newUserToMongo(name: string, e) {
@@ -112,7 +115,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
             
         } else {
             // check to see if name is available in Database
-            const fetchRequest = await fetch(`https://math-fact-missions.herokuapp.com/api/addNewUser`, {
+            const fetchRequest = await fetch(`http://localhost:${PORT}/api/addNewUser`, {
                 method: "POST",
                 body: JSON.stringify(name),
                 headers:
