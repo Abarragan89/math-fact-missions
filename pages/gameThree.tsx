@@ -556,7 +556,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
             level = numberRange / 10 - 1;
             operation = 3
         }
-        await fetch(`https://math-fact-missions.herokuapp.com/api/updateGameHighscore`, {
+        await fetch(`http://localhost:3000/api/updateGameHighscore`, {
             method: "PUT",
             headers:
             {
