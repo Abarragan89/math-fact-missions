@@ -29,7 +29,7 @@ function Friends() {
 
     async function getUserData(searchName) {
         searchName = searchName.toLowerCase();
-        const data = await fetch(`http://localhost:3000/api/getUser?name=${searchName}`, {
+        const data = await fetch(`https://math-fact-missions.herokuapp.com/api/getUser?name=${searchName}`, {
             method: "GET",
             headers:
             {
@@ -48,7 +48,7 @@ function Friends() {
 
     async function getGlobalScoreboard(e) {
         e.preventDefault();
-        const data = await fetch(`http://localhost:3000/api/getGlobalScoreboard?level=${level}&operation=${operation}&gameType=${gameType}`, {
+        const data = await fetch(`https://math-fact-missions.herokuapp.com/api/getGlobalScoreboard?level=${level}&operation=${operation}&gameType=${gameType}`, {
             method: "GET",
             headers:
             {

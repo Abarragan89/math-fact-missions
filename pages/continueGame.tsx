@@ -71,13 +71,14 @@ function ContinueGame() {
         }
     }
     async function deleteUserFromMongo(username: string) {
-        await fetch(`http://localhost:3000/api/deleteUser`, {
+        await fetch(`https://math-fact-missions.herokuapp.com/api/deleteUser`, {
             method: "DELETE",
             body: JSON.stringify({name: username}),
             headers:
             {
                 "Content-Type": "application/json"
-            }
+            
+            },
         })
     }
 
