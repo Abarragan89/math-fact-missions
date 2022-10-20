@@ -24,7 +24,7 @@ function Friends() {
 
     async function searchMongo(searchName) {
         searchName = searchName.toLowerCase();
-        const data = await fetch(`http://localhost:3000/api/getUser?name=${searchName}`, {
+        const data = await fetch(`https://math-fact-missions.herokuapp.com/api/getUser?name=${searchName}`, {
             method: "GET",
             headers:
             {
@@ -37,7 +37,7 @@ function Friends() {
     }
     async function getUserData(searchName) {
         searchName = searchName.toLowerCase();
-        const data = await fetch(`http://localhost:3000/api/getUser?name=${searchName}`, {
+        const data = await fetch(`https://math-fact-missions.herokuapp.com/api/getUser?name=${searchName}`, {
             method: "GET",
             headers:
             {
@@ -61,7 +61,7 @@ function Friends() {
 
     async function addFriend(username, friendName) {
         friendName = friendName.toLowerCase();
-        await fetch(`http://localhost:3000/api/addFriend`, {
+        await fetch(`https://math-fact-missions.herokuapp.com/api/addFriend`, {
             method: "POST",
             body: JSON.stringify({
                 username,
@@ -77,7 +77,7 @@ function Friends() {
 
     async function removeFriendMongoDB(friendName: string, username) {
         friendName = friendName.toLowerCase();
-        await fetch(`http://localhost:3000/api/deleteFriend`, {
+        await fetch(`https://math-fact-missions.herokuapp.com/api/deleteFriend`, {
             method: "PUT",
             body: JSON.stringify({
                 username,

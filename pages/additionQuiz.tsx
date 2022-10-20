@@ -240,7 +240,7 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
         } else {
             operation = 3
         }
-        await fetch(`http://localhost:3000/api/updateFinalScore`, {
+        await fetch(`https://math-fact-missions.herokuapp.com/api/updateFinalScore`, {
             method: "PUT",
             headers:
             {
