@@ -381,25 +381,25 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
                 if (gameType === 'multiplication') {
                     if (score.current > obj.games[0].game1Highscore[numberRange - 1]) {
                         obj.games[0].game1Highscore[numberRange - 1] = score.current
-                        addScoresToMongoDB();
+                        addGameScoresToMongoDB();
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'division') {
                     if (score.current > obj.games[1].game1Highscore[numberRange - 1]) {
                         obj.games[1].game1Highscore[numberRange - 1] = score.current
-                        addScoresToMongoDB();
+                        addGameScoresToMongoDB();
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'addition') {
                     if (score.current > obj.games[2].game1Highscore[numberRange / 10 - 1]) {
                         obj.games[2].game1Highscore[numberRange / 10 - 1] = score.current
-                        addScoresToMongoDB();
+                        addGameScoresToMongoDB();
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'subtraction') {
                     if (score.current > obj.games[3].game1Highscore[numberRange / 10 - 1]) {
                         obj.games[3].game1Highscore[numberRange / 10 - 1] = score.current
-                        addScoresToMongoDB();
+                        addGameScoresToMongoDB();
                         setNewHighscore(true)
                     }
                 }
@@ -449,7 +449,7 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
     console.log(numberRange)
 
     // Add score to MongoDB 
-    async function addScoresToMongoDB() {
+    async function addGameScoresToMongoDB() {
         let level: number;
         // operation will be a number that points to its location in the database array
         // Ex. [multiplication, division, addition, subtraction]
@@ -469,7 +469,7 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
             level = numberRange / 10 - 1;
             operation = 3
         }
-        await fetch(`http://localhost:3000/api/updateHighscore`, {
+        await fetch(`http://localhost:3000/api/updateGameHighscore`, {
             method: "PUT",
             headers:
             {
@@ -550,7 +550,7 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
                             <p>Highscore:{highscore}</p>
                         </div>
                     </div>
-                    <button onClick={addScoresToMongoDB}>Test Query</button>
+                    <button onClick={addGameScoresToMongoDB}>Test Query</button>
                 </main>
 
             }

@@ -348,28 +348,28 @@ function GameTwo({ wrongAlien, stopMusic }) {
             searchIndex.get(username).onsuccess = function (event) {
                 const obj = ((event.target as IDBRequest).result);
                 // set the highscore or final highscore
-                if(gameType === 'multiplication') {
+                if (gameType === 'multiplication') {
                     if (score.current > obj.games[0].game2Highscore[numberRange - 1]) {
                         obj.games[0].game2Highscore[numberRange - 1] = score.current
-                        addScoresToMongoDB()
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'division') {
                     if (score.current > obj.games[1].game2Highscore[numberRange - 1]) {
                         obj.games[1].game2Highscore[numberRange - 1] = score.current
-                        addScoresToMongoDB()
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'addition') {
                     if (score.current > obj.games[2].game2Highscore[numberRange / 10 - 1]) {
                         obj.games[2].game2Highscore[numberRange / 10 - 1] = score.current
-                        addScoresToMongoDB()
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'subtraction') {
                     if (score.current > obj.games[3].game2Highscore[numberRange / 10 - 1]) {
                         obj.games[3].game2Highscore[numberRange / 10 - 1] = score.current
-                        addScoresToMongoDB()
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 }
@@ -406,8 +406,8 @@ function GameTwo({ wrongAlien, stopMusic }) {
         }
     }, [username, gameType])
 
-       // Add score to MongoDB 
-       async function addScoresToMongoDB() {
+      // Add score to MongoDB 
+      async function addGameScoresToMongoDB() {
         let level: number;
         // operation will be a number that points to its location in the database array
         // Ex. [multiplication, division, addition, subtraction]
@@ -427,7 +427,7 @@ function GameTwo({ wrongAlien, stopMusic }) {
             level = numberRange / 10 - 1;
             operation = 3
         }
-        await fetch(`http://localhost:3000/api/updateHighscore`, {
+        await fetch(`http://localhost:3000/api/updateGameHighscore`, {
             method: "PUT",
             headers:
             {
@@ -459,12 +459,12 @@ function GameTwo({ wrongAlien, stopMusic }) {
                 <div className={styles.mainGameTwoPage}>
                     <div className={`flex-box-sb ${styles.gameData}`}>
                         <p>Score Multiplier<br /> {problemTimer.current}</p>
-                            <p className={`${styles.hollowBtn} ${styles.quitBtn}`}
-                                onClick={() => {
-                                    stopMusic();
-                                    window.location.reload();
-                                }}
-                            >Abort</p>
+                        <p className={`${styles.hollowBtn} ${styles.quitBtn}`}
+                            onClick={() => {
+                                stopMusic();
+                                window.location.reload();
+                            }}
+                        >Abort</p>
                         {gameType === 'multiplication' &&
                             <p className={styles.numberRangeUI}>{`Multiples: ${numberRange > 12 ? 'final' : numberRange}`}</p>
                         }
