@@ -25,6 +25,7 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
     const [playIncorrectAnswer] = useSound('/sounds/wrongAnswer.wav')
     const [winningScore, setWinningScore] = useState<number>(20000)
 
+
     // Data from Context API
     const { numberRange } = useContext(AppContext)
 
@@ -48,7 +49,7 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
                 const transaction = db.transaction('activeGames', 'readwrite')
                 const objectStore = transaction.objectStore('activeGames')
                 // target specific field for search
-                const searchIndex = objectStore.index('player_name');
+                const searchIndex = objectStore.index('display_name');
                 searchIndex.get(username).onsuccess = function (event) {
                     if (gameType === 'multiplication') {
                         setPassedLevels((event.target as IDBRequest).result.games[0].level)
@@ -198,13 +199,17 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
             const transaction = db.transaction('activeGames', 'readwrite')
             const objectStore = transaction.objectStore('activeGames')
             // target specific field for search
-            const searchIndex = objectStore.index('player_name');
+            const searchIndex = objectStore.index('display_name');
             searchIndex.get(username).onsuccess = function (event) {
                 if (gameType === 'multiplication') {
                     const obj = ((event.target as IDBRequest).result);
-                    console.log(obj)
                     // set the highscore or final highscore
-                    numberRange > 12 ? obj.games[0].finalHighscore = currentScore : obj.games[0].highscore = currentScore;
+                    if(numberRange > 12) {
+                        obj.games[0].finalHighscore = currentScore
+                        updateFinalHighscores()
+                    } else {
+                        obj.games[0].highscore = currentScore
+                    }
                     if (currentScore > winningScore) {
                         playPassedMission();
                         // high score remain high score if on last level. Or else rest to zero
@@ -220,7 +225,12 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
                     const obj = ((event.target as IDBRequest).result);
                     console.log(obj)
                     // set the highscore or final highscore
-                    numberRange > 12 ? obj.games[1].finalHighscore = currentScore : obj.games[1].highscore = currentScore;
+                    if(numberRange > 12) {
+                        obj.games[0].finalHighscore = currentScore
+                        updateFinalHighscores()
+                    } else {
+                        obj.games[0].highscore = currentScore
+                    }
                     if (currentScore > winningScore) {
                         playPassedMission();
                         // high score remain high score if on last level. Or else rest to zero
@@ -235,6 +245,35 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
             }
         }
     }
+
+    // update Final Highscore to MongoDB 
+    async function updateFinalHighscores() {
+        // operation will be a number that points to its location in the database array
+        // Ex. [multiplication, division, addition, subtraction]
+        let operation: number;
+        if (gameType === 'multiplication') {
+            operation = 0
+        } else if (gameType === 'division') {
+            operation = 1
+        } else if (gameType === 'addition') {
+            operation = 2
+        } else {
+            operation = 3
+        }
+        await fetch(`http://localhost:3000/api/updateFinalScore`, {
+            method: "PUT",
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                operation,
+                highscore: currentScore
+            }),
+        })
+    }
+
 
     function endGame(): void {
         // End Game function

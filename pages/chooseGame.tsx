@@ -29,7 +29,7 @@ function ChooseGame() {
                 const db = request.result
                 const transaction = db.transaction('activeGames', 'readonly')
                     .objectStore('activeGames')
-                    .index('player_name');
+                    .index('display_name');
                 const keyRange = IDBKeyRange.only(username);
 
                 // Set up the request query
@@ -50,7 +50,12 @@ function ChooseGame() {
                             text={`${username}'s Missions`}
                             inGame={false}
                         />
-                        <Link href='/'><p onClick={() => play()} className={styles.hollowBtn}>Back</p></Link>
+
+                        <Link href='/continueGame'><p onClick={() => play()} className={styles.hollowBtn}>Back</p></Link>
+                        <div className='flex-box-sa-wrap'>
+                        <Link href={`/friends?username=${username}`}><p onClick={() => play()} className={styles.hollowBtn}>Friends</p></Link>
+                        <Link href={`/leaderBoards?username=${username}`}><p onClick={() => play()} className={styles.hollowBtn}>Ranks</p></Link>
+                        </div>
 
                         <section className='flex-box-sa-wrap'>
 

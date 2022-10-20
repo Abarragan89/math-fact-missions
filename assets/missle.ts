@@ -60,7 +60,7 @@ class Missle {
     }
     update() {
         this.draw();
-        this.y -= 10;
+        this.y -= 13;
     }
 }
 

@@ -1,0 +1,45 @@
+@import '../colorsFonts.module.scss';
+
+.friendList {
+    li {
+        margin-top: 10px;
+        color: white;
+        list-style: none;    
+    }
+    h2 {
+        margin: 10px 10px 0;
+        color: $secondaryColor;
+    }
+    
+}
+
+.searchFriendDiv {
+    input {
+        font-size: 1.1em;
+        padding: 5px;
+        background-color: $accentColor;
+        color: $secondaryColor
+    }
+    p {
+        color: white;
+        margin-left: 5px;
+    }
+    button {
+        
+    }
+    .findBtn {
+        
+    }
+    
+    .addFriendBtn {
+        margin: 10px 0;
+    }
+}
+
+
+.subtitle {
+    margin-top: 0;
+    color: white;
+}
+
+

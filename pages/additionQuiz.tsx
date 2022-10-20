@@ -47,7 +47,7 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
                 const transaction = db.transaction('activeGames', 'readwrite')
                 const objectStore = transaction.objectStore('activeGames')
                 // target specific field for search
-                const searchIndex = objectStore.index('player_name');
+                const searchIndex = objectStore.index('display_name');
                 searchIndex.get(username).onsuccess = function (event) {
                     if (gameType === 'addition') {
                         setPassedLevels((event.target as IDBRequest).result.games[2].level)
@@ -72,7 +72,7 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
 
     // problem timer works better with useRef since it has to quickly reset and hold value
     const problemTimer = useRef<number>(100);
-    const [mainTimer, setMainTimer] = useState<number>(100);
+    const [mainTimer, setMainTimer] = useState<number>(30);
     const [currentScore, setCurrentScore] = useState<number>(0);
 
     // Set up numbers and answers
@@ -180,12 +180,17 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
             const transaction = db.transaction('activeGames', 'readwrite')
             const objectStore = transaction.objectStore('activeGames')
             // target specific field for search
-            const searchIndex = objectStore.index('player_name');
+            const searchIndex = objectStore.index('display_name');
             searchIndex.get(username).onsuccess = function (event) {
                 if (gameType === 'addition') {
                     const obj = ((event.target as IDBRequest).result);
                     // set the highscore or final highscore
-                    numberRange > 90 ? obj.games[2].finalHighscore = currentScore : obj.games[2].highscore = currentScore;
+                    if(numberRange > 90) {
+                        obj.games[2].finalHighscore = currentScore
+                        updateFinalHighscores()
+                    } else {
+                        obj.games[2].highscore = currentScore
+                    }
                     if (currentScore > winningScore) {
                         playPassedMission();
                         // high score remain high score if on last level. Or else rest to zero
@@ -200,7 +205,12 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
                 } else if (gameType === 'subtraction') {
                     const obj = ((event.target as IDBRequest).result);
                     // set the highscore or final highscore
-                    numberRange > 90 ? obj.games[3].finalHighscore = currentScore : obj.games[3].highscore = currentScore;
+                    if(numberRange > 90) {
+                        obj.games[3].finalHighscore = currentScore
+                        updateFinalHighscores()
+                    } else {
+                        obj.games[3].highscore = currentScore
+                    }
                     if (currentScore > winningScore) {
                         playPassedMission();
                         // high score remain high score if on last level. Or else rest to zero
@@ -214,6 +224,34 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
                 }
             }
         }
+    }
+
+    // update Final Highscore to MongoDB 
+    async function updateFinalHighscores() {
+        // operation will be a number that points to its location in the database array
+        // Ex. [multiplication, division, addition, subtraction]
+        let operation: number;
+        if (gameType === 'multiplication') {
+            operation = 0
+        } else if (gameType === 'division') {
+            operation = 1
+        } else if (gameType === 'addition') {
+            operation = 2
+        } else {
+            operation = 3
+        }
+        await fetch(`http://localhost:3000/api/updateFinalScore`, {
+            method: "PUT",
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                operation,
+                highscore: currentScore
+            }),
+        })
     }
 
     // End Game function

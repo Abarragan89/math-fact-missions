@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import styles from '../styles/newGameModal/newGameModal.module.css';
 import styles2 from '../styles/chooseGame/chooseGame.module.css';
 import useSound from 'use-sound';
@@ -17,10 +16,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
 
 
     // save user data to indexedDB
-    async function addNewUserGame(name: string, e?) {
-        if (e) {
-            e.preventDefault()
-        }
+    async function addNewUserGame(name: string) {
         const indexedDB = window.indexedDB;
         const request = indexedDB.open('GameDatabase', 1);
         request.onerror = function (event) {
@@ -32,19 +28,22 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
             const transaction = db.transaction('activeGames', 'readwrite');
             const store = transaction.objectStore('activeGames');
             // check to see if name already exists
-            const searchIndex = store.index('player_name');
-            searchIndex.get(name.toLowerCase()).onsuccess = (event) => {
+            const searchIndex = store.index('name');
+            searchIndex.get(name.toLowerCase().trim()).onsuccess = (event) => {
                 if ((event.target as IDBRequest).result) {
                     setIsSuccessful(false)
                     inputEl.current.select();
                     errorText.current.innerHTML = 'Sorry, that name is already taken'
-                    console.log('did not create')
+                } else if (name === '') {
+                    setIsSuccessful(false)
+                    inputEl.current.select();
+                    errorText.current.innerHTML = 'You need to enter a name'
                 } else {
                     setIsSuccessful(true)
                     // Adding Data
                     store.put({
-                        id: uuidv4(),
-                        name: name.toLowerCase(),
+                        display_name: name.trim(),
+                        name: name.toLowerCase().trim(),
                         games:
                             [{
                                 operations: 'multiplication',
@@ -85,10 +84,9 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                                 game2Highscore: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                                 game3Highscore: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
-                            }
-                            ]
+                            }]
                     })
-                    window.location.replace(`/chooseGame?username=${username}`)
+                    window.location.replace(`/chooseGame?username=${name}`)
                 }
             }
         }
@@ -99,13 +97,50 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         inputEl.current.focus();
     }, [])
 
+
+
+    // add user to MongoDB database
+    async function newUserToMongo(name: string, e) {
+        name = name.trim();
+        if (e) {
+            e.preventDefault()
+        } 
+        if (name === '') {
+            setIsSuccessful(false)
+            inputEl.current.select();
+            errorText.current.innerHTML = 'You need to enter a name';
+            
+        } else {
+            // check to see if name is available in Database
+            const fetchRequest = await fetch(`http://localhost:3000/api/addNewUser`, {
+                method: "POST",
+                body: JSON.stringify(name),
+                headers:
+                {
+                    "Content-Type": "application/json"
+                }
+            })
+            const data = await fetchRequest.json();
+            // If name is not available, then fail and send message
+            if (data.successful === false) {
+                setIsSuccessful(false)
+                inputEl.current.select();
+                errorText.current.innerHTML = 'Sorry, that name is already taken'
+            } else {
+            // If name is available, then save it to indexedDB
+                setIsSuccessful(true)
+                await addNewUserGame(name)
+                window.location.replace(`/chooseGame?username=${name}`)
+            }
+        }
+    }
     return (
         <section className={`${styles.modalContainer}`}>
             <div>
                 <h2>Enter Name</h2>
                 <form className={styles.formEl} onSubmit={(e) => {
                     play();
-                    addNewUserGame(username, e);
+                    newUserToMongo(username, e);
                 }}>
                     <input
                         onChange={(e) => setUsername(e.target.value)}
@@ -121,7 +156,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                     type='submit'
                     onClick={(e) => {
                         play();
-                        addNewUserGame(username, e);
+                        newUserToMongo(username, e)
                     }}
                     className='mainButton mt-5 mb-5'
                 ><span>Let&apos;s Go!</span></button>

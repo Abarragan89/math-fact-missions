@@ -49,10 +49,10 @@ function ContinueGame() {
                 const transaction = db.transaction('activeGames', 'readwrite')
                 const objectStore = transaction.objectStore('activeGames')
                 // target specific field for search
-                const searchIndex = objectStore.index('player_name');
+                const searchIndex = objectStore.index('name');
                 searchIndex.get(username).onsuccess = function (event) {
                     const obj = ((event.target as IDBRequest).result);
-                    objectStore.delete(obj.id)
+                    objectStore.delete(obj.name)
                 }
             }
             // remove from UI
@@ -61,13 +61,24 @@ function ContinueGame() {
         }
 
     }
-    function confirmDelete(e, username: string ) {
+    async function confirmDelete(e, username: string ) {
         const message = 'Are you sure you want to delete? This is irreversible.'
         const confirmation = confirm(message)
         if(confirmation) {
             deleteGameSound();
-            deleteGame(e, username )
+            deleteUserFromMongo(username.toLowerCase())
+            deleteGame(e, username.toLowerCase())
         }
+    }
+    async function deleteUserFromMongo(username: string) {
+        await fetch(`http://localhost:3000/api/deleteUser`, {
+            method: "DELETE",
+            body: JSON.stringify({name: username}),
+            headers:
+            {
+                "Content-Type": "application/json"
+            }
+        })
     }
 
     return (
@@ -84,12 +95,12 @@ function ContinueGame() {
                     {activeGameData.map((data: any, index: number) => (
                         <div key={index} className={`${styles.continueGameDiv} flex-box-sb`}>
                             <div className={`${styles.gameInfoDiv} flex-box-sb-wrap`}>
-                                <p>{data.name}</p>
+                                <p>{data.display_name}</p>
                             </div>
                             <Link href={{
                                 pathname: `/chooseGame`,
                                 query: {
-                                    username: data.name,
+                                    username: data.display_name,
                                 }
                             }}>
                                 <h3
@@ -97,7 +108,7 @@ function ContinueGame() {
                                 ><FaPlay /></h3>
                             </Link>
                             <button>
-                                <FaTrash onClick={(e) => confirmDelete(e, data.name)} />
+                                <FaTrash onClick={(e) => confirmDelete(e, data.display_name)} />
                             </button>
                         </div>
                     ))}

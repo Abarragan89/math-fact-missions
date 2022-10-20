@@ -127,7 +127,6 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
             const distanceY = planet.current.y - astroids.current[0].y;
             let radii_sum = 500 + 30;
             if (distanceX * distanceX + distanceY * distanceY <= radii_sum * radii_sum) {
-                console.log('in collision')
                 fireBtnEl.current.disabled = 'true';
                 // planetExplosion();
                 setHitPlanet(true)
@@ -316,28 +315,32 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
             const transaction = db.transaction('activeGames', 'readwrite')
             const objectStore = transaction.objectStore('activeGames')
             // target specific field for search
-            const searchIndex = objectStore.index('player_name');
+            const searchIndex = objectStore.index('display_name');
             searchIndex.get(username).onsuccess = function (event) {
                 const obj = ((event.target as IDBRequest).result);
                 // set the highscore or final highscore
                 if(gameType === 'multiplication') {
                     if (score.current > obj.games[0].game3Highscore[numberRange - 1]) {
                         obj.games[0].game3Highscore[numberRange - 1] = score.current
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'division') {
                     if (score.current > obj.games[1].game3Highscore[numberRange - 1]) {
                         obj.games[1].game3Highscore[numberRange - 1] = score.current
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'addition') {
                     if (score.current > obj.games[2].game3Highscore[numberRange / 10 - 1]) {
                         obj.games[2].game3Highscore[numberRange / 10 - 1] = score.current
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'subtraction') {
                     if (score.current > obj.games[3].game3Highscore[numberRange / 10 - 1]) {
                         obj.games[3].game3Highscore[numberRange / 10 - 1] = score.current
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 }
@@ -356,7 +359,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                 const transaction = db.transaction('activeGames', 'readwrite')
                 const objectStore = transaction.objectStore('activeGames')
                 // target specific field for search
-                const searchIndex = objectStore.index('player_name');
+                const searchIndex = objectStore.index('display_name');
                 searchIndex.get(username).onsuccess = function (event) {
                     if (gameType === 'multiplication') {
                         setHighscore((event.target as IDBRequest).result.games[0].game3Highscore[numberRange - 1])
@@ -399,7 +402,12 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                 fireMissle();
                 totalCorrect.current += 1
                 score.current += (1000 * astroidSpeed.current)
-                if (totalCorrect.current === 35) {
+                if (totalCorrect.current === 45) {
+                    astroids.current.length = 1;
+                    level.current = 6
+                    astroidFrequency.current = 800
+                    astroidSpeed.current = .9
+                } else if (totalCorrect.current === 35) {
                     astroids.current.length = 1;
                     level.current = 5
                     astroidFrequency.current = 1000
@@ -500,7 +508,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                     astroids.current.length = 1;
                     level.current = 5
                     astroidFrequency.current = 1000
-                    astroidSpeed.current = 1.2
+                    astroidSpeed.current = 1.15
                 } else if (totalCorrect.current === 25) {
                     astroids.current.length = 1;
                     level.current = 4
@@ -527,6 +535,45 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
 
     const [isText, setIsText] = useState<boolean>(false)
 
+       // Add score to MongoDB 
+       async function addGameScoresToMongoDB() {
+        let level: number;
+        // operation will be a number that points to its location in the database array
+        // Ex. [multiplication, division, addition, subtraction]
+        let operation:number;
+        // set the level to the name of the key in the game highscore object.
+        // use the number range to calculate this. 
+        if (gameType === 'multiplication') {
+            level = numberRange - 1;
+            operation = 0
+        } else if (gameType === 'division') {
+            level = numberRange - 1;
+            operation = 1
+        } else if (gameType === 'addition') {
+            level = numberRange / 10 - 1;
+            operation = 2
+        } else {
+            level = numberRange / 10 - 1;
+            operation = 3
+        }
+        await fetch(`http://localhost:3000/api/updateGameHighscore`, {
+            method: "PUT",
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                level,
+                operation,
+                game: 'game3Highscore',
+                highscore: score.current
+            }),
+        })
+    }
+
+
+    
     return (
         <>
             <Head>
@@ -556,7 +603,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                     <div className={styles2.controls}>
                         <input
                             onFocus={() => setIsText(true)}
-                            onKeyDown={(e) => e.key === 'Enter' && assessResponse()}
+                            onKeyDown={(e) => e.key === 'Enter' && missles.current.length === 0 && assessResponse()}
                             onChange={(e) => finalAnswer.current = parseInt(e.target.value)}
                             type="text" ref={inputEl} />
                         <NumberSwiper
@@ -566,7 +613,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                         />
                         <button
                             ref={fireBtnEl}
-                            onClick={assessResponse}>
+                            onClick={() => missles.current.length === 0 && assessResponse()}>
                             Fire
                         </button>
 

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import styles from '../styles/headerStyles/headerStyles.module.css';
-import { AiFillHome } from 'react-icons/ai'
 
 
 function Header({ text, inGame }) {

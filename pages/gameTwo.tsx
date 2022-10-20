@@ -217,7 +217,7 @@ function GameTwo({ wrongAlien, stopMusic }) {
                 answer.current = dividendMinuend.current / divisorSubtrahend.current;
             }
             // set up cards
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 9; i++) {
                 if (i === 0) {
                     setCards(cards => [...cards, dividendMinuend.current])
                 } else if (i === 1) {
@@ -235,7 +235,7 @@ function GameTwo({ wrongAlien, stopMusic }) {
             const rand2 = randomNumberGenerator(numberRange / 2);
             answer.current = rand1 + rand2
             // set up cards
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 9; i++) {
                 if (i === 0) {
                     setCards(cards => [...cards, rand1])
                 } else if (i === 1) {
@@ -255,7 +255,7 @@ function GameTwo({ wrongAlien, stopMusic }) {
             dividendMinuend.current = (Math.max(randomNum1, randomNum2)) //Minued
             answer.current = dividendMinuend.current - divisorSubtrahend.current;
             // set up cards
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 9; i++) {
                 if (i === 0) {
                     setCards(cards => [...cards, dividendMinuend.current])
                 } else if (i === 1) {
@@ -271,16 +271,16 @@ function GameTwo({ wrongAlien, stopMusic }) {
     const alienSpeed = useRef<number>(null)
     useLayoutEffect(() => {
         if (gameType === 'addition' || gameType === 'subtraction') {
-            alienSpeed.current = 0.02
+            alienSpeed.current = 0.1
         } else {
-            alienSpeed.current = 0.035
+            alienSpeed.current = 0.12
 
         }
         ctx.current = canvasRef.current.getContext('2d');
         // create instances of spaceship
         astronaut.current = new Astronaut(ctx.current, 50, 50, {
             x: ctx.current.canvas.width / 2 - 25,
-            y: 100
+            y: 150
         },
             '/astronaut.png',
             {
@@ -344,28 +344,32 @@ function GameTwo({ wrongAlien, stopMusic }) {
             const transaction = db.transaction('activeGames', 'readwrite')
             const objectStore = transaction.objectStore('activeGames')
             // target specific field for search
-            const searchIndex = objectStore.index('player_name');
+            const searchIndex = objectStore.index('display_name');
             searchIndex.get(username).onsuccess = function (event) {
                 const obj = ((event.target as IDBRequest).result);
                 // set the highscore or final highscore
-                if(gameType === 'multiplication') {
+                if (gameType === 'multiplication') {
                     if (score.current > obj.games[0].game2Highscore[numberRange - 1]) {
                         obj.games[0].game2Highscore[numberRange - 1] = score.current
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'division') {
                     if (score.current > obj.games[1].game2Highscore[numberRange - 1]) {
                         obj.games[1].game2Highscore[numberRange - 1] = score.current
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'addition') {
                     if (score.current > obj.games[2].game2Highscore[numberRange / 10 - 1]) {
                         obj.games[2].game2Highscore[numberRange / 10 - 1] = score.current
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 } else if (gameType === 'subtraction') {
                     if (score.current > obj.games[3].game2Highscore[numberRange / 10 - 1]) {
                         obj.games[3].game2Highscore[numberRange / 10 - 1] = score.current
+                        addGameScoresToMongoDB()
                         setNewHighscore(true)
                     }
                 }
@@ -384,7 +388,7 @@ function GameTwo({ wrongAlien, stopMusic }) {
                 const transaction = db.transaction('activeGames', 'readwrite')
                 const objectStore = transaction.objectStore('activeGames')
                 // target specific field for search
-                const searchIndex = objectStore.index('player_name');
+                const searchIndex = objectStore.index('display_name');
                 searchIndex.get(username).onsuccess = function (event) {
                     if (gameType === 'multiplication') {
                         setHighscore((event.target as IDBRequest).result.games[0].game2Highscore[numberRange - 1])
@@ -402,6 +406,44 @@ function GameTwo({ wrongAlien, stopMusic }) {
         }
     }, [username, gameType])
 
+      // Add score to MongoDB 
+      async function addGameScoresToMongoDB() {
+        let level: number;
+        // operation will be a number that points to its location in the database array
+        // Ex. [multiplication, division, addition, subtraction]
+        let operation:number;
+        // set the level to the name of the key in the game highscore object.
+        // use the number range to calculate this. 
+        if (gameType === 'multiplication') {
+            level = numberRange - 1;
+            operation = 0
+        } else if (gameType === 'division') {
+            level = numberRange - 1;
+            operation = 1
+        } else if (gameType === 'addition') {
+            level = numberRange / 10 - 1;
+            operation = 2
+        } else {
+            level = numberRange / 10 - 1;
+            operation = 3
+        }
+        await fetch(`http://localhost:3000/api/updateGameHighscore`, {
+            method: "PUT",
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                level,
+                operation,
+                game: 'game2Highscore',
+                highscore: score.current
+            }),
+        })
+    }
+
+
     return (
         <>
             <Head>
@@ -417,12 +459,12 @@ function GameTwo({ wrongAlien, stopMusic }) {
                 <div className={styles.mainGameTwoPage}>
                     <div className={`flex-box-sb ${styles.gameData}`}>
                         <p>Score Multiplier<br /> {problemTimer.current}</p>
-                            <p className={`${styles.hollowBtn} ${styles.quitBtn}`}
-                                onClick={() => {
-                                    stopMusic();
-                                    window.location.reload();
-                                }}
-                            >Abort</p>
+                        <p className={`${styles.hollowBtn} ${styles.quitBtn}`}
+                            onClick={() => {
+                                stopMusic();
+                                window.location.reload();
+                            }}
+                        >Abort</p>
                         {gameType === 'multiplication' &&
                             <p className={styles.numberRangeUI}>{`Multiples: ${numberRange > 12 ? 'final' : numberRange}`}</p>
                         }
