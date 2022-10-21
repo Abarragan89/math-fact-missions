@@ -3,15 +3,15 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/api/:*',
-        destination: 'http://localhost:3000/*'
+        source: '/api/:path*',
+        destination: 'http://localhost:3000/:path*'
       }
     ]
   },
   async headers() {
     return [
       {
-        source: '/api/:*',
+        source: '/api/:path*',
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
