@@ -116,14 +116,13 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         } else {
             // check to see if name is available in Database
             // (path.join(__dirname, '../client/build')
-            const fetchRequest = await fetch(`http://localhost:${PORT}/api/addNewUser`, {
+            const fetchRequest = await fetch(`${path.join(__dirname, '/api')}/addNewUser`, {
                 method: "POST",
                 body: JSON.stringify(name),
                 headers:
                 {
                     "Content-Type": "application/json"
                 },
-                mode: 'no-cors'
             })
             const data = await fetchRequest.json();
             // If name is not available, then fail and send message
