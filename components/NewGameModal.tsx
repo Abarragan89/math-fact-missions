@@ -120,6 +120,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
             const fetchRequest = await fetch(`http://localhost:${PORT}/api/addNewUser`, {
                 method: "POST",
                 body: JSON.stringify(name),
+                mode: 'cors',
                 headers:
                 {
                     'Access-Control-Allow-Origin':'*',
