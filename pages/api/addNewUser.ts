@@ -231,7 +231,7 @@ export default async function handler(req, res) {
                     friends: []
                 })
             // res.header('Access-Control-Allow-Origin', '*');
-            // res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Origin", "*");
             // res.header(
             //   "Access-Control-Allow-Headers",
             //   "Origin, X-Requested-With, Content-Type, Accept, Authorization"
