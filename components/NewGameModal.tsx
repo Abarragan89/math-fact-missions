@@ -119,6 +119,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
             // const fetchRequest = await fetch(`${path.join(__dirname, '/api')}/addNewUser`, {
             const fetchRequest = await fetch(`http://localhost:${PORT}/api/addNewUser`, {
                 method: "POST",
+                mode: 'no-cors',
                 body: JSON.stringify(name),
                 headers:
                 {
