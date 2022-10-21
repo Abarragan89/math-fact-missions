@@ -125,7 +125,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 {
                     "Content-Type": "application/json"
                 },
-                mode: "no-cors"
+                // mode: "no-cors"
             })
             const data = await fetchRequest.json();
             // If name is not available, then fail and send message
