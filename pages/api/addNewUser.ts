@@ -230,6 +230,7 @@ export default async function handler(req, res) {
 
                     friends: []
                 })
+            // res.header('Access-Control-Allow-Origin', '*');
             res.json(newUser)
         }
     } catch (e) {
