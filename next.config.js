@@ -3,11 +3,10 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: 'https://math-fact-missions.herokuapp.com/api/:path*',
+        source: '/api/:path*',
         destination: 'http://localhost:3000/api/:path*'
       }
     ]
-  },
   // async headers() {
   //   return [
   //     {
