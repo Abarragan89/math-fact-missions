@@ -11,7 +11,7 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "/_next/:path*",
+        source: "/api/(.*)",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           { key: "Access-Control-Allow-Origin", value: "https://math-fact-missions.herokuapp.com" },
