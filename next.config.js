@@ -13,7 +13,8 @@ module.exports = {
       {
         source: "/_next/:path*",
         headers: [
-          { key: "Access-Control-Allow-Origin", value: "*" },
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "Access-Control-Allow-Origin", value: "https://math-fact-missions.herokuapp.com" },
         ]
       }
     ]
