@@ -123,7 +123,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 headers:
                 {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Origin": "https://math-fact-missions.herokuapp.com",
                     "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
                     "Access-Control-Allow-Credentials": "true"
                 },
