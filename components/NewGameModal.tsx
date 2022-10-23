@@ -116,7 +116,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         } else {
             // check to see if name is available in Database
 
-            const fetchRequest = await fetch(`/api/addNewUser`, {
+            const fetchRequest = await fetch(`http://localhost:3000/api/addNewUser`, {
                 method: "POST",
                 mode: 'no-cors',
                 body: JSON.stringify(name),
