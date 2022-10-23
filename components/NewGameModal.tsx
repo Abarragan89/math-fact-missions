@@ -6,7 +6,6 @@ const path = require('path');
 
 
 function NewGameModal({ modalTriggered, setModalTriggered }) {
-    const PORT = process.env.PORT || 3000;
     // Set up Sound
     const [play] = useSound('/sounds/buttonClick.wav', {
         volume: .3
@@ -101,7 +100,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
     }, [])
 
     
-
+    const PORT = process.env.PORT || 3000;
     // add user to MongoDB database
     async function newUserToMongo(name: string, e) {
         name = name.trim();
@@ -116,7 +115,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         } else {
             // check to see if name is available in Database
 
-            const fetchRequest = await fetch(`http://localhost:3000/api/addNewUser`, {
+            const fetchRequest = await fetch(`http://localhost:${PORT}/api/addNewUser`, {
                 method: "POST",
                 mode: 'no-cors',
                 body: JSON.stringify(name),
