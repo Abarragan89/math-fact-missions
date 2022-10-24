@@ -27,7 +27,6 @@ export default async function handler(req, res) {
                     }
                 ])
                 .toArray()
-            console.log(games)
             res.json(games)
         } else {
             const gameLevel = `games.${req.query.gameType}.${req.query.level}`
@@ -50,7 +49,6 @@ export default async function handler(req, res) {
                     }
                 ])
                 .toArray()
-            console.log(games)
             res.json(games)
         }
     } catch (e) {

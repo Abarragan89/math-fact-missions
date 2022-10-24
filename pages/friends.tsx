@@ -32,7 +32,6 @@ function Friends() {
             }
         })
         const res = await data.json();
-        console.log(await res)
         return res;
     }
     async function getUserData(searchName) {
@@ -47,7 +46,6 @@ function Friends() {
         const res = await data.json();
         setUser(res);
     }
-    console.log('user', user)
 
     async function searchFriends(e) {
         friendName.current = e.target.value
@@ -106,7 +104,7 @@ function Friends() {
                 text='Find Friends'
                 inGame={false}
             />
-            <Link href={`/chooseGame?username=${username}`}><p onClick={() => play()} className={styles3.hollowBtn}>Back</p></Link>
+            <Link href={`/welcomePage?username=${username}`}><p onClick={() => play()} className={styles3.hollowBtn}>Back</p></Link>
 
             <div className='flex-box-sa'>
                 {/* Search Div */}

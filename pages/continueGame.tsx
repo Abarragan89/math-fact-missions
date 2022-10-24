@@ -63,7 +63,6 @@ function ContinueGame() {
 
     }
     async function confirmDelete(e, username: string ) {
-        console.log('in confirm delete', username)
         const message = 'Are you sure you want to delete? This is irreversible.'
         const confirmation = confirm(message)
         if(confirmation) {
@@ -101,7 +100,7 @@ function ContinueGame() {
                                 <p>{data.display_name}</p>
                             </div>
                             <Link href={{
-                                pathname: `/chooseGame`,
+                                pathname: `/welcomePage`,
                                 query: {
                                     username: data.display_name,
                                 }

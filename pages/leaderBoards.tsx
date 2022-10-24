@@ -26,7 +26,6 @@ function Friends() {
     const [level, setLevel] = useState<string>('0');
     const [rankings, setRankings] = useState(null)
 
-
     async function getUserData(searchName) {
         searchName = searchName.toLowerCase();
         const data = await fetch(`/api/getUser?name=${searchName}`, {
@@ -48,7 +47,7 @@ function Friends() {
 
     async function getGlobalScoreboard(e) {
         e.preventDefault();
-        const data = await fetch(`http://localhost:3000/api/getGlobalScoreboard?level=${level}&operation=${operation}&gameType=${gameType}`, {
+        const data = await fetch(`/api/getGlobalScoreboard?level=${level}&operation=${operation}&gameType=${gameType}`, {
             method: "GET",
             headers:
             {
@@ -65,7 +64,7 @@ function Friends() {
                 text='Ranks'
                 inGame={false}
             />
-            <Link href={`/chooseGame?username=${username}`}><p onClick={() => play()} className={styles3.hollowBtn}>Back</p></Link>
+            <Link href={`/welcomePage?username=${username}`}><p onClick={() => play()} className={styles3.hollowBtn}>Back</p></Link>
             {showGlobalBoards ?
                 // <LeaderBoard />
                 <>

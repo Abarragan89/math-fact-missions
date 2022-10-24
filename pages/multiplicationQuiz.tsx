@@ -223,7 +223,6 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
 
                 } else if (gameType === 'division') {
                     const obj = ((event.target as IDBRequest).result);
-                    console.log(obj)
                     // set the highscore or final highscore
                     if(numberRange > 12) {
                         obj.games[0].finalHighscore = currentScore

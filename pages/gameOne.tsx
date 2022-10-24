@@ -446,8 +446,6 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
         ))
     }
 
-    console.log(numberRange)
-
     // Add score to MongoDB 
     async function addGameScoresToMongoDB() {
         let level: number;

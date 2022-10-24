@@ -3,7 +3,6 @@ import  clientPromise  from '../../lib/mongodb'
 export default async function handler(req, res) {
     try {
         const data = req.body
-        console.log(data)
         const updateString = `games.${data.operation}.finalHighscore`
         const client = await clientPromise;
         const db = client.db('math-fact-missions');
