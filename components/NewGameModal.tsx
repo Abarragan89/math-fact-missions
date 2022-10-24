@@ -115,17 +115,17 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         } else {
             // check to see if name is available in Database
 
-            const fetchRequest = await fetch(`http://localhost:${PORT}/api/addNewUser`, {
+            const fetchRequest = await fetch(`/api/addNewUser`, {
                 method: "POST",
-                mode: 'no-cors',
+                // mode: 'no-cors',
                 body: JSON.stringify(name),
-                headers:
-                {
-                    "Content-Type": "application/json",
+                // headers:
+                // {
+                    // "Content-Type": "application/json",
                     // "Access-Control-Allow-Origin": "https://math-fact-missions.herokuapp.com",
                     // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
                     // "Access-Control-Allow-Credentials": "true"
-                },
+                // },
                 
             })
             const data = await fetchRequest.json();
