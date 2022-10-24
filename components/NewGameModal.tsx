@@ -99,34 +99,27 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         inputEl.current.focus();
     }, [])
 
-    
-    const PORT = process.env.PORT || 3000;
+
     // add user to MongoDB database
     async function newUserToMongo(name: string, e) {
         name = name.trim();
         if (e) {
             e.preventDefault()
-        } 
+        }
         if (name === '') {
             setIsSuccessful(false)
             inputEl.current.select();
             errorText.current.innerHTML = 'You need to enter a name';
-            
+
         } else {
             // check to see if name is available in Database
-
             const fetchRequest = await fetch(`/api/addNewUser`, {
                 method: "POST",
-                // mode: 'no-cors',
-                body: JSON.stringify(name),
-                // headers:
-                // {
-                    // "Content-Type": "application/json",
-                    // "Access-Control-Allow-Origin": "https://math-fact-missions.herokuapp.com",
-                    // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-                    // "Access-Control-Allow-Credentials": "true"
-                // },
-                
+                headers:
+                {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name }),
             })
             const data = await fetchRequest.json();
             // If name is not available, then fail and send message
@@ -135,7 +128,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 inputEl.current.select();
                 errorText.current.innerHTML = 'Sorry, that name is already taken'
             } else {
-            // If name is available, then save it to indexedDB
+                // If name is available, then save it to indexedDB
                 setIsSuccessful(true)
                 await addNewUserGame(name)
                 window.location.replace(`/chooseGame?username=${name}`)
