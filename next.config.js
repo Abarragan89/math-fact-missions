@@ -4,7 +4,7 @@ module.exports = {
   async headers() {
     return [
       {
-        source: '/api/addNewUser',
+        source: '/api/(.*)',
         headers: [
           { key: "Content-Type", value: "application/json" },
           { key: "Access-Control-Allow-Origin", value: "https://math-fact-missions.herokuapp.com" },
