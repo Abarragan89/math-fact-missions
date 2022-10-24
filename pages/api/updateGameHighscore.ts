@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         const user = await db
             .collection('math-fact-missions')
             .updateOne(
-                {name: data.username.toLowerCase()},
+                { displayName: data.username },
                 { $set: {[updateString]: data.highscore }}
 
             )
