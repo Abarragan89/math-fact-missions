@@ -556,7 +556,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
             level = numberRange / 10 - 1;
             operation = 3
         }
-        await fetch(`http://localhost:3000/api/updateGameHighscore`, {
+        await fetch(`/api/updateGameHighscore`, {
             method: "PUT",
             headers:
             {
