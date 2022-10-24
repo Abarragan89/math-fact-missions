@@ -230,6 +230,7 @@ export default async function handler(req, res) {
 
                     friends: []
                 })
+            res.setHeader('Access-Control-Allow-Origin', 'https://math-fact-missions.herokuapp.com/');
             res.json(newUser)
         }
     } catch (e) {
