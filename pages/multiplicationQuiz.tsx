@@ -260,7 +260,7 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
         } else {
             operation = 3
         }
-        await fetch(`http://localhost:3000/api/updateFinalScore`, {
+        await fetch(`/api/updateFinalScore`, {
             method: "PUT",
             headers:
             {

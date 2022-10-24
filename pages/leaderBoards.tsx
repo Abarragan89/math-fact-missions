@@ -29,7 +29,7 @@ function Friends() {
 
     async function getUserData(searchName) {
         searchName = searchName.toLowerCase();
-        const data = await fetch(`http://localhost:3000/api/getUser?name=${searchName}`, {
+        const data = await fetch(`/api/getUser?name=${searchName}`, {
             method: "GET",
             headers:
             {

@@ -71,7 +71,7 @@ function ContinueGame() {
         }
     }
     async function deleteUserFromMongo(username: string) {
-        await fetch(`http://localhost:3000/api/deleteUser`, {
+        await fetch(`/api/deleteUser`, {
             method: "DELETE",
             body: JSON.stringify({name: username}),
             headers:
