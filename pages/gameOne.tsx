@@ -471,6 +471,10 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
         }
         await fetch(`/api/updateGameHighscore`, {
             method: "PUT",
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
                 username,
                 level,

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Link from 'next/link';
 import styles from '../styles/homePage/index.module.css';
+import styles2 from '../styles/chooseGame/chooseGame.module.css';
 import { FaTrash } from 'react-icons/fa';
 import { FaPlay } from 'react-icons/fa';
 import useSound from 'use-sound';
@@ -62,6 +63,7 @@ function ContinueGame() {
 
     }
     async function confirmDelete(e, username: string ) {
+        console.log('in confirm delete', username)
         const message = 'Are you sure you want to delete? This is irreversible.'
         const confirmation = confirm(message)
         if(confirmation) {
@@ -73,12 +75,11 @@ function ContinueGame() {
     async function deleteUserFromMongo(username: string) {
         await fetch(`/api/deleteUser`, {
             method: "DELETE",
-            body: JSON.stringify({name: username}),
             headers:
             {
                 "Content-Type": "application/json"
-            
             },
+            body: JSON.stringify({ username }),
         })
     }
 
@@ -93,6 +94,7 @@ function ContinueGame() {
                         text='Active Missions'
                         inGame={false}
                     />
+                    <Link href='/'><p onClick={() => play()} className={styles2.hollowBtn}>Back</p></Link>
                     {activeGameData.map((data: any, index: number) => (
                         <div key={index} className={`${styles.continueGameDiv} flex-box-sb`}>
                             <div className={`${styles.gameInfoDiv} flex-box-sb-wrap`}>
@@ -113,12 +115,6 @@ function ContinueGame() {
                             </button>
                         </div>
                     ))}
-                    <Link href='/'>
-                        <button
-                            className={`${styles} mainButton mb-5`}
-                            onClick={() => play()}
-                        ><span>Back</span></button>
-                    </Link>
                 </main>
             }
         </>

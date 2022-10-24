@@ -2,14 +2,13 @@ import clientPromise from '../../lib/mongodb'
 
 export default async function handler(req, res) {
     try {
-        const name = req.body
+        let name = await req.body.name
         const client = await clientPromise;
         const db = client.db('math-fact-missions');
         const nameTaken = db.collection('math-fact-missions').find({ name: name.toLowerCase() }).toArray()
         const data = await nameTaken
         // check if name if available. 
         if (data.length > 0) {
-            console.log('name is taken')
             res.send({ successful: false })
         } else {
             // if so, add it to the database

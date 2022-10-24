@@ -4,6 +4,7 @@ export default async function handler(req, res) {
     try {
         console.log('updating')
         const data = req.body
+        console.log(data)
         const updateString = `games.${data.operation}.${data.game}.${data.level}`
         const client = await clientPromise;
         const db = client.db('math-fact-missions');
