@@ -21,7 +21,7 @@ function Friends() {
     const [friendFound, setFriendFound] = useState(null);
     const [addedFriend, setAddedFriend] = useState<number>(0);
     const [indexedDBName, setindexedDBName] = useState<string>(null);
-    const [user, setUser] = useState<any>()
+    const [user, setUser] = useState<any>(null)
 
 
     // Get user Data from indexedDB first so users can't hack into mongo through URL
@@ -45,7 +45,8 @@ function Friends() {
         }
     }, [username])
 
-    async function searchMongo(searchName) {
+    // Search mongo for users on keypress
+    async function searchMongo(searchName: string) {
         searchName = searchName.toLowerCase();
         const data = await fetch(`/api/getUser?name=${searchName}`, {
             method: "GET",
@@ -55,8 +56,14 @@ function Friends() {
             }
         })
         const res = await data.json();
-        return res;
+        if (res.user === null) {
+            return;
+        } else {
+            setFriendFound(res)
+        }
     }
+
+    // Search mongo for User info after confirmed with indexedDB
     async function getUserData(searchName) {
         searchName = searchName;
         const data = await fetch(`/api/getUser?name=${searchName}`, {
@@ -67,28 +74,28 @@ function Friends() {
             }
         })
         const res = await data.json();
+        console.log(res)
         setUser(res);
     }
-    console.log(user)
-    console.log(friendFound)
 
     async function searchFriends(e) {
         friendName.current = e.target.value
-        setFriendFound(await searchMongo(friendName.current))
+        await searchMongo(friendName.current)
     }
+
     useEffect(() => {
-        if (username) {
+        // get the user from MongoDB only if it exists in indexedDB
+        if (indexedDBName) {
             getUserData(indexedDBName)
         }
     }, [indexedDBName, addedFriend])
 
-    async function addFriend(username, friendName) {
-        friendName = friendName.toLowerCase();
+    async function addFriend(user, friendID) {
         await fetch(`/api/addFriend`, {
             method: "POST",
             body: JSON.stringify({
-                username,
-                friendName
+                user,
+                friendID
             }),
             headers:
             {
@@ -98,13 +105,12 @@ function Friends() {
         setAddedFriend(addedFriend + 1)
     }
 
-    async function removeFriendMongoDB(friendName: string, username) {
-        friendName = friendName.toLowerCase();
+    async function removeFriendMongoDB(friendID: string, username: string) {
         await fetch(`/api/deleteFriend`, {
             method: "PUT",
             body: JSON.stringify({
                 username,
-                friendName
+                friendID
             }),
             headers:
             {
@@ -112,16 +118,17 @@ function Friends() {
             }
         })
         setAddedFriend(addedFriend + 1)
-
     }
 
-    function removeFriend(friendName: string) {
+    function removeFriend(friendID: string) {
         const message = 'Are you sure you want to remove this friend? This is irreversible.'
         const confirmation = confirm(message)
         if (confirmation) {
-            removeFriendMongoDB(friendName, username)
+            removeFriendMongoDB(friendID, indexedDBName)
         }
     }
+
+    console.log(user)
 
     return (
         <main className={styles2.lobbyMain}>
@@ -144,11 +151,27 @@ function Friends() {
                     </div>
                     {friendFound && user &&
                         <div className='flex-box-sb'>
-                            <p className={styles.foundFriend}>{friendFound.name}</p>
-                            {user.friends.includes(friendFound) ?
-                                <p onClick={() => addFriend(user.name, friendFound.name)}>Friended</p>
+                            <p className={styles.foundFriend}>{friendFound.user.name}</p>
+                            {user.user.friends.length === 0 ?
+                                <button className={styles.addFriendBtn} onClick={() => addFriend(user.user, friendFound.user._id)}>Add</button>
                                 :
-                                <button className={styles.addFriendBtn} onClick={() => addFriend(user.name, friendFound.name)}>Add</button>
+                                user.user.friends.map((friendObj, index: number) => {
+                                    if (friendObj._id === friendFound.user._id) {
+                                        return (
+                                            <p key={index}>Friended</p>
+                                        )
+                                    } else if (user.user._id === friendFound.user._id) {
+                                        return (
+                                            <p key={index}>(You)</p>
+                                        )
+                                    }
+                                    else {
+                                        return (
+                                            <button className={styles.addFriendBtn} onClick={() => addFriend(user.user, friendFound.user._id)}>Add</button>
+                                        )
+                                    }
+                                })
+
                             }
                         </div>
                     }
@@ -158,12 +181,12 @@ function Friends() {
                 <div>
                     <h2 className={styles.subtitle}>Friends</h2>
                     {user &&
-                        user.friends.map((friend: string, index: number) =>
+                        user.user.friends.map((friend, index: number) =>
                             <div key={index}>
                                 <ul>
                                     <div className={styles.friendList} key={index}>
-                                        <li>{friend}</li>
-                                        <button onClick={() => removeFriend(friend)}>Remove</button>
+                                        <li>{friend.name}</li>
+                                        <button onClick={() => removeFriend(friend._id)}>Remove</button>
                                     </div>
                                 </ul>
                             </div>

@@ -46,6 +46,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                     store.put({
                         display_name: name.trim(),
                         name: name.toLowerCase().trim(),
+                        friends: [],
                         games:
                             [{
                                 operations: 'multiplication',
@@ -88,7 +89,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
 
                             }]
                     })
-                    window.location.replace(`/chooseGame?username=${name}`)
+                    window.location.replace(`/welcomePage?username=${name}`)
                 }
             }
         }
@@ -131,7 +132,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 // If name is available, then save it to indexedDB
                 setIsSuccessful(true)
                 await addNewUserGame(name)
-                window.location.replace(`/welcomePage?username=${name}`)
+                // window.location.replace(`/welcomePage?username=${name}`)
             }
         }
     }
