@@ -14,13 +14,36 @@ function Friends() {
     })
 
     const router = useRouter();
-    const { username } = router.query
+    let { username } = router.query
 
     const inputEl = useRef(null)
     const friendName = useRef<string>('')
     const [friendFound, setFriendFound] = useState(null);
     const [addedFriend, setAddedFriend] = useState<number>(0);
-    const [user, setUser] = useState(null);
+    const [indexedDBName, setindexedDBName] = useState<string>(null);
+    const [user, setUser] = useState<any>()
+
+
+    // Get user Data from indexedDB first so users can't hack into mongo through URL
+    // if name exists in indexedDB, then access mongoDB
+    useEffect(() => {
+        if (username) {
+            const indexedDB = window.indexedDB;
+            const request = indexedDB.open('GameDatabase', 1);
+            request.onsuccess = () => {
+                const db = request.result
+                const transaction = db.transaction('activeGames', 'readonly')
+                    .objectStore('activeGames')
+                    .index('display_name');
+                const keyRange = IDBKeyRange.only(username);
+                // Set up the request query
+                const cursorRequest = transaction.openCursor(keyRange);
+                cursorRequest.onsuccess = (event: any) => {
+                    setindexedDBName(event.target.result.value.name)
+                }
+            }
+        }
+    }, [username])
 
     async function searchMongo(searchName) {
         searchName = searchName.toLowerCase();
@@ -35,7 +58,7 @@ function Friends() {
         return res;
     }
     async function getUserData(searchName) {
-        searchName = searchName.toLowerCase();
+        searchName = searchName;
         const data = await fetch(`/api/getUser?name=${searchName}`, {
             method: "GET",
             headers:
@@ -46,6 +69,7 @@ function Friends() {
         const res = await data.json();
         setUser(res);
     }
+    console.log(user)
 
     async function searchFriends(e) {
         friendName.current = e.target.value
@@ -53,9 +77,9 @@ function Friends() {
     }
     useEffect(() => {
         if (username) {
-            getUserData(username)
+            getUserData(indexedDBName)
         }
-    }, [username, addedFriend])
+    }, [indexedDBName, addedFriend])
 
     async function addFriend(username, friendName) {
         friendName = friendName.toLowerCase();

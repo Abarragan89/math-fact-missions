@@ -19,7 +19,8 @@ function ChooseGame() {
 
     const router = useRouter();
     const { username } = router.query
-
+    
+    // Get user data from indexedDB
     useEffect(() => {
         if (username) {
             const indexedDB = window.indexedDB;
@@ -30,7 +31,6 @@ function ChooseGame() {
                     .objectStore('activeGames')
                     .index('display_name');
                 const keyRange = IDBKeyRange.only(username);
-
                 // Set up the request query
                 const cursorRequest = transaction.openCursor(keyRange);
                 cursorRequest.onsuccess = (event: any) => {
