@@ -70,6 +70,7 @@ function Friends() {
         setUser(res);
     }
     console.log(user)
+    console.log(friendFound)
 
     async function searchFriends(e) {
         friendName.current = e.target.value
