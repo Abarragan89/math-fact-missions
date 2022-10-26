@@ -48,7 +48,7 @@ function Friends() {
     // Search mongo for users on keypress
     async function searchMongo(searchName: string) {
         searchName = searchName.toLowerCase();
-        const data = await fetch(`/api/getUser?name=${searchName}`, {
+        const data = await fetch(`/api/getUsers?name=${searchName}`, {
             method: "GET",
             headers:
             {
@@ -129,6 +129,7 @@ function Friends() {
     }
 
     console.log(user)
+    console.log('friend', friendFound)
 
     return (
         <main className={styles2.lobbyMain}>
@@ -141,39 +142,48 @@ function Friends() {
             <div className='flex-box-sa'>
                 {/* Search Div */}
                 <div className={styles.searchFriendDiv}>
-                    <div className='flex-box-sb'>
-                        <input
-                            onChange={(e) => searchFriends(e)}
-                            type="text"
-                            ref={inputEl}
-                        />
-                        <button onClick={(e) => searchFriends(e)}>Find</button>
-                    </div>
+                    <input
+                        onChange={(e) => searchFriends(e)}
+                        type="text"
+                        ref={inputEl}
+                    />
                     {friendFound && user &&
-                        <div className='flex-box-sb'>
-                            <p className={styles.foundFriend}>{friendFound.user.name}</p>
-                            {user.user.friends.length === 0 ?
-                                <button className={styles.addFriendBtn} onClick={() => addFriend(user.user, friendFound.user._id)}>Add</button>
+                        friendFound.user.map((friend, index: number) =>
+                            !friendName.current ?
+                                <p key={index}>
+                                </p>
                                 :
-                                user.user.friends.map((friendObj, index: number) => {
-                                    if (friendObj._id === friendFound.user._id) {
-                                        return (
-                                            <p key={index}>Friended</p>
-                                        )
-                                    } else if (user.user._id === friendFound.user._id) {
-                                        return (
-                                            <p key={index}>(You)</p>
-                                        )
+                                <div key={index} className='flex-box-sb'>
+                                    {user.user.friends.length === 0
+                                        ?
+                                        <>
+                                            <p className={styles.foundFriend}>{friend.displayName}</p>
+                                            <button className={styles.addFriendBtn} onClick={() => addFriend(user.user, friend._id)}>Add</button>
+                                        </>
+                                        :
+                                        <>
+                                            {user.user.friends.find(obj => obj._id === friend._id) ?
+                                                <>
+                                                    <p className={styles.foundFriend}>{friend.displayName}</p>
+                                                    <p>Friended</p>
+                                                </>
+                                                :
+                                                friend._id === user.user._id
+                                                    ?
+                                                    <>
+                                                        <p className={styles.foundFriend}>{friend.displayName}</p>
+                                                        <p>(You)</p>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <p className={styles.foundFriend}>{friend.displayName}</p>
+                                                        <button className={styles.addFriendBtn} onClick={() => addFriend(user.user, friend._id)}>Add</button>
+                                                    </>
+                                            }
+                                        </>
                                     }
-                                    else {
-                                        return (
-                                            <button className={styles.addFriendBtn} onClick={() => addFriend(user.user, friendFound.user._id)}>Add</button>
-                                        )
-                                    }
-                                })
-
-                            }
-                        </div>
+                                </div>
+                        )
                     }
                 </div>
 
@@ -194,7 +204,7 @@ function Friends() {
                     }
                 </div>
             </div>
-        </main>
+        </main >
     )
 }
 

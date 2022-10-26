@@ -136,9 +136,7 @@ function Friends() {
                         }
                     </div>
                 </>
-
                 :
-
                 showFriendBoards ?
                     <>
                         <form onSubmit={(e) => getGlobalScoreboard(e)} className='flex-box-se-wrap'>

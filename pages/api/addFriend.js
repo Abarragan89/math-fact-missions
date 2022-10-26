@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       await connectMongo();
       const user = await User.findOneAndUpdate(
         { _id: data.user._id },
-        { $set: {friends: data.friendID }}
+        { $addToSet: {friends: data.friendID }}
       );
       res.json({ user });
     }
