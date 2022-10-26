@@ -58,7 +58,6 @@ function Lobby() {
                 cursorRequest.onsuccess = (event: any) => {
                     if (gameType === 'multiplication') {
                         setPlayerData(event.target.result.value.games[0])
-                        console.log(event.target.result.value.games[0].game1Highscore)
                     } else if (gameType === 'division') {
                         setPlayerData(event.target.result.value.games[1])
                     } else if (gameType === 'addition') {

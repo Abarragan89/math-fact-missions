@@ -15,12 +15,16 @@
     color: white;
     margin: 0 auto;
     margin-top: 30px;
+    padding-bottom: 30px;
     width: 90%;
-    background-color: $accentColor;
+
+    
 
     .scoreboardRow {
         font-size: 1.2em;
         border: 1px solid white;
+        // background-color: $accentColor;
+        margin-bottom: 20px;
     }
     .scoreboardRow:first-child {
         color: gold;
