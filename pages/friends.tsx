@@ -74,7 +74,6 @@ function Friends() {
             }
         })
         const res = await data.json();
-        console.log(res)
         setUser(res);
     }
 
@@ -162,7 +161,7 @@ function Friends() {
                                         </>
                                         :
                                         <>
-                                            {user.user.friends.find(obj => obj._id === friend._id) ?
+                                            {user.user.friends.find(obj => obj._id === friend._id) && !friend._id === user.user._id ?
                                                 <>
                                                     <p className={styles.foundFriend}>{friend.displayName}</p>
                                                     <p>Friended</p>
@@ -194,9 +193,17 @@ function Friends() {
                         user.user.friends.map((friend, index: number) =>
                             <div key={index}>
                                 <ul>
-                                    <div className={styles.friendList} key={index}>
-                                        <li>{friend.name}</li>
-                                        <button onClick={() => removeFriend(friend._id)}>Remove</button>
+                                    <div className={styles.friendList}>
+                                        {/* Dont show yourself as your friend */}
+                                        {friend.name === username
+                                            ?
+                                            <></>
+                                            :
+                                            <>
+                                                <li>{friend.name}</li>
+                                                <button onClick={() => removeFriend(friend._id)}>Remove</button>
+                                            </>
+                                        }
                                     </div>
                                 </ul>
                             </div>

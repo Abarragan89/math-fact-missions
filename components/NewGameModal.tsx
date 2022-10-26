@@ -145,6 +145,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 }}>
                     <input
                         onChange={(e) => setUsername(e.target.value)}
+                        maxLength={18}
                         type='text'
                         ref={inputEl}
                     />
