@@ -22,7 +22,7 @@ function Friends() {
     const [showBoard, setShowBoards] = useState<string>('');
     const [showFriendBoards, setShowFriendBoards] = useState<boolean>(false);
     const [operation, setOperation] = useState<string>('multiplication');
-    const [gameType, setGameType] = useState('game1Highscore');
+    const [gameType, setGameType] = useState<string>('game1Highscore');
     const [level, setLevel] = useState<string>('0');
     const [rankings, setRankings] = useState(null)
 
@@ -73,6 +73,7 @@ function Friends() {
         const fullfilledPromise = await data.json()
         setRankings(fullfilledPromise)
     }
+    console.log(rankings)
     return (
         <main className={styles2.lobbyMain}>
             <Header
@@ -81,7 +82,6 @@ function Friends() {
             />
             <Link href={`/welcomePage?username=${username}`}><p onClick={() => play()} className={styles3.hollowBtn}>Back</p></Link>
             {showBoard === 'Global' ?
-                // <LeaderBoard />
                 <>
                     <form onSubmit={(e) => getGlobalScoreboard(e)} className='flex-box-se-wrap'>
                         <select onChange={(e) => {
@@ -123,20 +123,13 @@ function Friends() {
                     </form>
                     <div className={styles.scoreBoard}>
                         {rankings &&
-                            rankings.map((player, index: number) =>
+                            rankings.user.map((player, index: number) =>
                                 <div key={index} className={`${styles.scoreboardRow} flex-box-sa`}>
                                     <p>{index + 1}. {player.displayName}</p>
-                                    {gameType === 'game1Highscore' &&
-                                        <p>{player.games.game1Highscore[level]}</p>
-                                    }
-                                    {gameType === 'game2Highscore' &&
-                                        <p>{player.games.game2Highscore[level]}</p>
-                                    }
-                                    {gameType === 'game3Highscore' &&
-                                        <p>{player.games.game3Highscore[level]}</p>
-                                    }
-                                    {gameType === 'finalHighscore' &&
-                                        <p>{player.games.finalHighscore}</p>
+                                    {gameType === 'finalHighscore' ?
+                                        <p>{player.games[operation][gameType]}</p>
+                                        :
+                                        <p>{player.games[operation][gameType][level]}</p>
                                     }
                                 </div>
                             )
@@ -188,7 +181,7 @@ function Friends() {
                         </form>
                         <div className={styles.scoreBoard}>
                             {rankings &&
-                                rankings.map((player, index: number) =>
+                                rankings.user.map((player, index: number) =>
                                     <div key={index} className={`${styles.scoreboardRow} flex-box-sa`}>
                                         <p>{index + 1}. {player.displayName}</p>
                                         {gameType === 'game1Highscore' &&

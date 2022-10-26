@@ -16,10 +16,10 @@ const userSchema = new Schema({
         trim: true
     },
     games: {
-        type: Array,
+        type: Object,
         require: true,
-        default: [
-            {
+        default: {
+            multiplication: {
                 operation: 'Multiplication',
                 level: 1,
                 highscore: 0,
@@ -70,7 +70,7 @@ const userSchema = new Schema({
                     12: 0
                 }
             },
-            {
+            division: {
                 operation: 'Division',
                 level: 1,
                 highscore: 0,
@@ -121,7 +121,7 @@ const userSchema = new Schema({
                     12: 0
                 }
             },
-            {
+            addition: {
                 operation: 'Addition',
                 level: 1,
                 highscore: 0,
@@ -166,7 +166,7 @@ const userSchema = new Schema({
                     10: 0,
                 }
             },
-            {
+            subtraction: {
                 operation: 'Subtraction',
                 level: 1,
                 highscore: 0,
@@ -211,8 +211,7 @@ const userSchema = new Schema({
                     10: 0,
                 }
             },
-
-        ]
+        }
     },
     friends: [
         {

@@ -29,7 +29,6 @@ export default async function handler(req, res) {
     if (data.user._id === data.friendID) {
       throw Error('You can\'t befriend yourself')
     } else {
-      console.log(data)
       await connectMongo();
       const user = await User.findOneAndUpdate(
         { _id: data.user._id },

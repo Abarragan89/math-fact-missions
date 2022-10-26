@@ -448,24 +448,17 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
 
     // Add score to MongoDB 
     async function addGameScoresToMongoDB() {
-        let level: number;
-        // operation will be a number that points to its location in the database array
-        // Ex. [multiplication, division, addition, subtraction]
-        let operation:number;
         // set the level to the name of the key in the game highscore object.
         // use the number range to calculate this. 
+        let level: number;
         if (gameType === 'multiplication') {
             level = numberRange - 1;
-            operation = 0
         } else if (gameType === 'division') {
             level = numberRange - 1;
-            operation = 1
         } else if (gameType === 'addition') {
             level = numberRange / 10 - 1;
-            operation = 2
         } else {
             level = numberRange / 10 - 1;
-            operation = 3
         }
         await fetch(`/api/updateGameHighscore`, {
             method: "PUT",
@@ -476,7 +469,7 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
             body: JSON.stringify({
                 username,
                 level,
-                operation,
+                gameType,
                 game: 'game1Highscore',
                 highscore: score.current
             }),

@@ -107,7 +107,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                         470,
                         10,
                         'yes'
-                        )
+                    )
                 )
 
             )
@@ -116,7 +116,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
 
     // need to use useEffect so the explosion sound only runs once. 
     useEffect(() => {
-        if(checkCollisionWithPlanet()) {
+        if (checkCollisionWithPlanet()) {
             planetExplosion();
         }
     }, [hitPlanet])
@@ -307,7 +307,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
 
 
     // // Update highscore if new highscore
-     function endGameFunction() {
+    function endGameFunction() {
         const indexedDB = window.indexedDB;
         const request = indexedDB.open('GameDatabase', 1);
         request.onsuccess = () => {
@@ -319,7 +319,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
             searchIndex.get(username).onsuccess = function (event) {
                 const obj = ((event.target as IDBRequest).result);
                 // set the highscore or final highscore
-                if(gameType === 'multiplication') {
+                if (gameType === 'multiplication') {
                     if (score.current > obj.games[0].game3Highscore[numberRange - 1]) {
                         obj.games[0].game3Highscore[numberRange - 1] = score.current
                         addGameScoresToMongoDB()
@@ -465,7 +465,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                 setLostLife(randomNumberGenerator(1000000));
             } else {
                 wrongAlien();
-            } 
+            }
         } else if (gameType === 'addition') {
             if (finalAnswer.current === number1 + number2 && !checkCollisionWithPlanet()) {
                 playCorrectAnswer();
@@ -535,26 +535,19 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
 
     const [isText, setIsText] = useState<boolean>(false)
 
-       // Add score to MongoDB 
-       async function addGameScoresToMongoDB() {
-        let level: number;
-        // operation will be a number that points to its location in the database array
-        // Ex. [multiplication, division, addition, subtraction]
-        let operation:number;
+    // Add score to MongoDB 
+    async function addGameScoresToMongoDB() {
         // set the level to the name of the key in the game highscore object.
         // use the number range to calculate this. 
+        let level: number;
         if (gameType === 'multiplication') {
             level = numberRange - 1;
-            operation = 0
         } else if (gameType === 'division') {
             level = numberRange - 1;
-            operation = 1
         } else if (gameType === 'addition') {
             level = numberRange / 10 - 1;
-            operation = 2
         } else {
             level = numberRange / 10 - 1;
-            operation = 3
         }
         await fetch(`/api/updateGameHighscore`, {
             method: "PUT",
@@ -565,7 +558,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
             body: JSON.stringify({
                 username,
                 level,
-                operation,
+                gameType,
                 game: 'game3Highscore',
                 highscore: score.current
             }),
@@ -573,7 +566,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
     }
 
 
-    
+
     return (
         <>
             <Head>
@@ -588,15 +581,15 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                 <main className={styles.mainStudyPage}>
                     <div className='flex-box-sa'>
                         <p>Score: {score.current}</p>
-                            <p className={`${styles.hollowBtn} ${styles.quitBtn}`}
-                                onClick={() => {
-                                    stopMusic();
-                                    window.location.reload();
-                                }}
-                            >Abort</p>
+                        <p className={`${styles.hollowBtn} ${styles.quitBtn}`}
+                            onClick={() => {
+                                stopMusic();
+                                window.location.reload();
+                            }}
+                        >Abort</p>
                         <p>Level: {level.current}</p>
                     </div>
-                        <p className={styles2.message}>Use your keybord or spin number wheels to Fire</p>
+                    <p className={styles2.message}>Use your keybord or spin number wheels to Fire</p>
                     <canvas width={360} height={500} ref={canvasRef} />
                     {/* Controls */}
 

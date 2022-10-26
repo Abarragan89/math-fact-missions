@@ -23,9 +23,8 @@ export default async function handler(req, res) {
   try {
     const data = req.body
       await connectMongo();
-      const user = await User.findOneAndUpdate(
+      const user = await User.deleteOne(
         { name: data.username },
-        { $pull: {friends: data.friendID }}
       );
       res.json({ user });
   } catch (error) {
