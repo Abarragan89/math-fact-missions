@@ -91,8 +91,8 @@ export default async function handler(req, res) {
       res.json({ user });
     }
   } catch (error) {
-    console.log(error);
-    res.json({ error });
+    console.log('error', error.code);
+    res.send({ successful: false })
   }
 
 }

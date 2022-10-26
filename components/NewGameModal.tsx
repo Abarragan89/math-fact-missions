@@ -124,7 +124,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
             })
             const data = await fetchRequest.json();
             // If name is not available, then fail and send message
-            if (data.successful === false) {
+            if (data.error) {
                 setIsSuccessful(false)
                 inputEl.current.select();
                 errorText.current.innerHTML = 'Sorry, that name is already taken'
@@ -132,7 +132,6 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                 // If name is available, then save it to indexedDB
                 setIsSuccessful(true)
                 await addNewUserGame(name)
-                // window.location.replace(`/welcomePage?username=${name}`)
             }
         }
     }

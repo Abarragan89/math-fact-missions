@@ -39,36 +39,38 @@ function ContinueGame() {
         }
     }, [])
 
-    async function deleteGame(e, username: string ) {
+    async function deleteGame(e, username: string) {
         // make sure the correct item was clicked so when we remove from UI, it removes the correct item through DOM traverse
-        if (e.target.tagName === 'path') {
-            // delete from database
-            const indexedDB = window.indexedDB;
-            const request = indexedDB.open('GameDatabase', 1);
-            request.onsuccess = () => {
-                const db = request.result
-                const transaction = db.transaction('activeGames', 'readwrite')
-                const objectStore = transaction.objectStore('activeGames')
-                // target specific field for search
-                const searchIndex = objectStore.index('name');
-                searchIndex.get(username).onsuccess = function (event) {
-                    const obj = ((event.target as IDBRequest).result);
-                    objectStore.delete(obj.name)
-                }
+        // delete from database
+        const indexedDB = window.indexedDB;
+        const request = indexedDB.open('GameDatabase', 1);
+        request.onsuccess = () => {
+            const db = request.result
+            const transaction = db.transaction('activeGames', 'readwrite')
+            const objectStore = transaction.objectStore('activeGames')
+            // target specific field for search
+            const searchIndex = objectStore.index('name');
+            searchIndex.get(username).onsuccess = function (event) {
+                const obj = ((event.target as IDBRequest).result);
+                objectStore.delete(obj.name)
             }
-            // remove from UI
+        }
+        // remove from UI
+        if (e.target.tagName === 'path') {
             const divElement = e.target.parentNode.parentNode.parentNode
             divElement.style.display = 'none';
+        } else {
+            const divElement = e.target.parentNode.parentNode
+            divElement.style.display = 'none';
         }
-
     }
-    async function confirmDelete(e, username: string ) {
+    async function confirmDelete(e, username: string) {
         const message = 'Are you sure you want to delete? This is irreversible.'
         const confirmation = confirm(message)
-        if(confirmation) {
+        if (confirmation) {
             deleteGameSound();
-            deleteUserFromMongo(username.toLowerCase())
             deleteGame(e, username.toLowerCase())
+            deleteUserFromMongo(username.toLowerCase())
         }
     }
     async function deleteUserFromMongo(username: string) {
