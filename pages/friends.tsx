@@ -165,14 +165,14 @@ function Friends() {
                                             {user.user.friends.find(obj => obj._id === friend._id) && friend._id !== user.user._id ?
                                                 <>
                                                     <p className={styles.foundFriend}>{friend.displayName}</p>
-                                                    <p>Friended</p>
+                                                    <p className={styles.friendOptionText}>Friend</p>
                                                 </>
                                                 :
                                                 friend._id === user.user._id
                                                     ?
                                                     <>
                                                         <p className={styles.foundFriend}>{friend.displayName}</p>
-                                                        <p>(You)</p>
+                                                        <p className={styles.friendOptionText}>(You)</p>
                                                     </>
                                                     :
                                                     <>

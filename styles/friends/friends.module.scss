@@ -39,13 +39,9 @@
         cursor: pointer;
         color: black;
     }
-
 }
 
 
-.foundFriend+p {
-    color: $secondaryColor;
-}
 .searchFriendDiv {
     padding: 20px;
     border-radius: 5px;
@@ -53,8 +49,10 @@
     height: 300px;
 
     input {
+        display: block;
+        margin: 0 20px 10px;
         padding: 5px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         font-size: 1.2em;
         border-radius: 4px;
         outline: $green;
@@ -87,6 +85,9 @@
         cursor: pointer;
         color: white;
     }
+    .friendOptionText {
+        color: $secondaryColor;
+    }
 }
 
 
@@ -103,6 +104,7 @@
     }
 
     .searchFriendDiv {
+        padding: 20px 10px;
         width: 80%;
         margin: 0 auto;
         margin-bottom: 40px;

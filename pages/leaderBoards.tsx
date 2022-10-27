@@ -41,7 +41,7 @@ function Friends() {
     }
 
     console.log(rankings)
-    
+
     ////////////////// friend scoreboard  Logic///////////
     // Get user Data from indexedDB first so users can't hack into mongo through URL
     // if name exists in indexedDB, then access mongoDB
@@ -52,8 +52,8 @@ function Friends() {
             request.onsuccess = () => {
                 const db = request.result
                 const transaction = db.transaction('activeGames', 'readonly')
-                .objectStore('activeGames')
-                .index('display_name');
+                    .objectStore('activeGames')
+                    .index('display_name');
                 const keyRange = IDBKeyRange.only(username);
                 // Set up the request query
                 const cursorRequest = transaction.openCursor(keyRange);
@@ -77,7 +77,7 @@ function Friends() {
         const fullfilledPromise = await data.json()
         setRankings(fullfilledPromise)
     }
-    
+
     return (
         <main className={styles2.lobbyMain}>
             <Header
@@ -86,44 +86,46 @@ function Friends() {
             />
             <Link href={`/welcomePage?username=${username}`}><p onClick={() => play()} className={styles3.hollowBtn}>Back</p></Link>
             {showBoard === 'Global' ?
-                <>
-                    <form onSubmit={(e) => getGlobalScoreboard(e)} className='flex-box-se-wrap'>
-                        <select onChange={(e) => {
-                            setRankings(null);
-                            setOperation(e.target.value);
-                        }} name="operation" id="operation">
-                            <option value="multiplication">Multiplication</option>
-                            <option value="division">Division</option>
-                            <option value="addition">Addition</option>
-                            <option value="subtraction">Subtraction</option>
-                        </select>
-                        <select onChange={(e) => {
-                            setRankings(null);
-                            setGameType(e.target.value);
-                        }} name="game" id="game">
-                            <option value="game1Highscore">Alien Invasion</option>
-                            <option value="game2Highscore">Space Race</option>
-                            <option value="game3Highscore">Apocolypse</option>
-                            <option value="finalHighscore">Final Score</option>
-                        </select>
-                        <select onChange={(e) => {
-                            setRankings(null);
-                            setLevel(e.target.value)
-                        }} name="level" id="level">
-                            <option value="0">1</option>
-                            <option value="1">2</option>
-                            <option value="2">3</option>
-                            <option value="3">4</option>
-                            <option value="4">5</option>
-                            <option value="5">6</option>
-                            <option value="6">7</option>
-                            <option value="7">8</option>
-                            <option value="8">9</option>
-                            <option value="9">10</option>
-                            <option value="10">11</option>
-                            <option value="11">12</option>
-                        </select>
-                        <button type='submit'>Go</button>
+                <div className={styles.leaderBoardForm}>
+                    <form onSubmit={(e) => getGlobalScoreboard(e)}>
+                        <div className='flex-box-se'>
+                            <select onChange={(e) => {
+                                setRankings(null);
+                                setOperation(e.target.value);
+                            }} name="operation" id="operation">
+                                <option value="multiplication">Multiplication</option>
+                                <option value="division">Division</option>
+                                <option value="addition">Addition</option>
+                                <option value="subtraction">Subtraction</option>
+                            </select>
+                            <select onChange={(e) => {
+                                setRankings(null);
+                                setGameType(e.target.value);
+                            }} name="game" id="game">
+                                <option value="game1Highscore">Alien Invasion</option>
+                                <option value="game2Highscore">Space Race</option>
+                                <option value="game3Highscore">Apocolypse</option>
+                                <option value="finalHighscore">Final Score</option>
+                            </select>
+                            <select onChange={(e) => {
+                                setRankings(null);
+                                setLevel(e.target.value)
+                            }} name="level" id="level">
+                                <option value="0">1</option>
+                                <option value="1">2</option>
+                                <option value="2">3</option>
+                                <option value="3">4</option>
+                                <option value="4">5</option>
+                                <option value="5">6</option>
+                                <option value="6">7</option>
+                                <option value="7">8</option>
+                                <option value="8">9</option>
+                                <option value="9">10</option>
+                                <option value="10">11</option>
+                                <option value="11">12</option>
+                            </select>
+                        </div>
+                        <button type='submit'>Get Ranks</button>
                     </form>
                     <div className={styles.scoreBoard}>
                         {rankings &&
@@ -139,65 +141,66 @@ function Friends() {
                             )
                         }
                     </div>
-                </>
+                </div>
                 :
                 showFriendBoards ?
-                <>
-                <form onSubmit={(e) => getFriendScoreboard(e)} className='flex-box-se-wrap'>
-                    <select onChange={(e) => {
-                        setRankings(null);
-                        setOperation(e.target.value);
-                    }} name="operation" id="operation">
-                        <option value="multiplication">Multiplication</option>
-                        <option value="division">Division</option>
-                        <option value="addition">Addition</option>
-                        <option value="subtraction">Subtraction</option>
-                    </select>
-                    <select onChange={(e) => {
-                        setRankings(null);
-                        setGameType(e.target.value);
-                    }} name="game" id="game">
-                        <option value="game1Highscore">Alien Invasion</option>
-                        <option value="game2Highscore">Space Race</option>
-                        <option value="game3Highscore">Apocolypse</option>
-                        <option value="finalHighscore">Final Score</option>
-                    </select>
-                    <select onChange={(e) => {
-                        setRankings(null);
-                        setLevel(e.target.value)
-                    }} name="level" id="level">
-                        <option value="0">1</option>
-                        <option value="1">2</option>
-                        <option value="2">3</option>
-                        <option value="3">4</option>
-                        <option value="4">5</option>
-                        <option value="5">6</option>
-                        <option value="6">7</option>
-                        <option value="7">8</option>
-                        <option value="8">9</option>
-                        <option value="9">10</option>
-                        <option value="10">11</option>
-                        <option value="11">12</option>
-                    </select>
-                    <button type='submit'>Go</button>
-                </form>
-                <div className={styles.scoreBoard}>
-                    {rankings &&
-                        rankings.user.friends.map((player, index: number) =>
-                            <div key={index} className={`${styles.scoreboardRow} flex-box-sa`}>
-                                <p>{index + 1}. {player.displayName}</p>
-                                {gameType === 'finalHighscore' ?
-                                    <p>{player.games[operation][gameType]}</p>
-                                    :
-                                    <p>{player.games[operation][gameType][level]}</p>
-                                }
+                    <div className={styles.leaderBoardForm}>
+                        <form onSubmit={(e) => getFriendScoreboard(e)}>
+                            <div className='flex-box-se'>
+                                <select onChange={(e) => {
+                                    setRankings(null);
+                                    setOperation(e.target.value);
+                                }} name="operation" id="operation">
+                                    <option value="multiplication">Multiplication</option>
+                                    <option value="division">Division</option>
+                                    <option value="addition">Addition</option>
+                                    <option value="subtraction">Subtraction</option>
+                                </select>
+                                <select onChange={(e) => {
+                                    setRankings(null);
+                                    setGameType(e.target.value);
+                                }} name="game" id="game">
+                                    <option value="game1Highscore">Alien Invasion</option>
+                                    <option value="game2Highscore">Space Race</option>
+                                    <option value="game3Highscore">Apocolypse</option>
+                                    <option value="finalHighscore">Final Score</option>
+                                </select>
+                                <select onChange={(e) => {
+                                    setRankings(null);
+                                    setLevel(e.target.value)
+                                }} name="level" id="level">
+                                    <option value="0">1</option>
+                                    <option value="1">2</option>
+                                    <option value="2">3</option>
+                                    <option value="3">4</option>
+                                    <option value="4">5</option>
+                                    <option value="5">6</option>
+                                    <option value="6">7</option>
+                                    <option value="7">8</option>
+                                    <option value="8">9</option>
+                                    <option value="9">10</option>
+                                    <option value="10">11</option>
+                                    <option value="11">12</option>
+                                </select>
                             </div>
-                        )
-                    }
-                </div>
-            </>
+                            <button type='submit'>Get Ranks</button>
+                        </form>
+                        <div className={styles.scoreBoard}>
+                            {rankings &&
+                                rankings.user.friends.map((player, index: number) =>
+                                    <div key={index} className={`${styles.scoreboardRow} flex-box-sa`}>
+                                        <p>{index + 1}. {player.displayName}</p>
+                                        {gameType === 'finalHighscore' ?
+                                            <p>{player.games[operation][gameType]}</p>
+                                            :
+                                            <p>{player.games[operation][gameType][level]}</p>
+                                        }
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </div>
                     :
-
                     <div className={styles.mainButtonDiv}>
                         <button
                             className={`mainButton ${button.homePageBtn}`}

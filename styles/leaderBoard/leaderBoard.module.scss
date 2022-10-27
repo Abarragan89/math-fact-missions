@@ -1,5 +1,34 @@
 @import '../colorsFonts.module.scss';
 
+.leaderBoardForm {
+    select {
+        font-size: .9em;
+        padding: 5px;
+        border-radius: 5px;
+        font-family: 'Space Mono', monospace;
+        background-color: $accentColor;
+        color: $secondaryColor;
+        border: none;
+    }
+    select:focus {
+        outline: $secondaryColor;
+        border: 1px solid $secondaryColor;
+    };
+    option {
+        background-color: $accentColor;
+    }
+    button {
+        display: block;
+        margin: 30px auto;
+        padding: 10px 50px;
+        font-size: 1.1em;
+        background-color: $transparentGreen;
+        color: $offWhite;
+        border-radius: 5px;
+        border: 2px solid $green;
+    }
+}
+
 .mainButtonDiv {
     display: flex;
     flex-direction: column;
