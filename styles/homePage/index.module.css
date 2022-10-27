@@ -34,13 +34,19 @@
   cursor: pointer;
 }
 .homepageMain .continueGameDiv .gameInfoDiv p {
-  font-size: 1.7em;
+  font-size: 1.3em;
+  margin-left: 20px;
 }
 .homepageMain .continueGameDiv button {
   background-color: transparent;
   color: white;
   border: none;
   font-size: 1.1em;
+  margin-right: 10px;
+  font-size: 1.5em;
+}
+.homepageMain .continueGameDiv h3 {
+  font-size: 1.5em;
 }
 .homepageMain .continueGameDiv button svg:hover {
   color: black;
@@ -76,6 +82,7 @@
 @media screen and (max-width: 900px) {
   .homepageMain .continueGameDiv {
     padding: 10px;
+    width: 95%;
   }
   .homepageMain .continueGameDiv button {
     font-size: 1.5em;
@@ -89,8 +96,8 @@
     align-items: flex-start;
   }
   .homepageMain .continueGameDiv .gameInfoDiv p {
-    margin-left: 5px;
+    margin-left: 2px;
     margin-bottom: 0;
-    margin-top: 5px;
+    margin-top: 0px;
   }
 }/*# sourceMappingURL=index.module.css.map */

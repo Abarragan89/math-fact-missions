@@ -73,7 +73,8 @@ a {
 }
 
 .mainButton:active {
-  box-shadow: 1px 1px 0px #f7ff0f;
+  transform: translate(0.2em, 0.2em);
+  box-shadow: 3px 3px 0px #f7ff0f;
 }
 
 /* main heading styles */

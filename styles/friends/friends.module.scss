@@ -1,38 +1,91 @@
 @import '../colorsFonts.module.scss';
 
-.friendList {
-    li {
-        margin-top: 10px;
-        color: white;
-        list-style: none;    
-    }
-    h2 {
-        margin: 10px 10px 0;
-        color: $secondaryColor;
-    }
-    
+.friendMain {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 50px;
 }
 
-.searchFriendDiv {
-    input {
-        font-size: 1.1em;
-        padding: 5px;
-        background-color: $accentColor;
-        color: $secondaryColor
+.friendList {
+    padding: 0;
+
+    .friendItem {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid $green;
+        padding: 10px;
+        border-radius: 5px;
     }
+
+    .friendItem:hover {
+        background-color: $green;
+    }
+
+    li {
+        color: white;
+        list-style: none;
+        margin: 0 10px;
+        font-size: 1.2em;
+    }
+
+    button {
+        color: $offWhite;
+        border: none;
+        background-color: transparent;
+        font-size: 1.4em;
+    }
+
+    button:hover {
+        cursor: pointer;
+        color: black;
+    }
+
+}
+
+
+.foundFriend+p {
+    color: $secondaryColor;
+}
+.searchFriendDiv {
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid $green;
+    height: 300px;
+
+    input {
+        padding: 5px;
+        margin-bottom: 20px;
+        font-size: 1.2em;
+        border-radius: 4px;
+        outline: $green;
+        background-color: $offWhite;
+        border: none;
+        color: $green;
+        font-weight: bold;
+        font-family: 'Space Mono', monospace;
+    }
+
     p {
         color: white;
-        margin-left: 5px;
+        margin: 20px 0 5px;
+        font-size: 1.1em;
     }
-    button {
-        
+
+    p:first-child {
+        margin-right: 20px;
     }
-    .findBtn {
-        
-    }
-    
+
     .addFriendBtn {
         margin: 10px 0;
+        background-color: transparent;
+        border: none;
+        color: $green;
+        font-size: 1.7em;
+    }
+
+    .addFriendBtn:hover {
+        cursor: pointer;
+        color: white;
     }
 }
 
@@ -40,6 +93,31 @@
 .subtitle {
     margin-top: 0;
     color: white;
+    text-align: center;
+    margin-bottom: 0;
 }
 
+@media screen and (max-width: 675px) {
+    .friendMain {
+        flex-direction: column;
+    }
 
+    .searchFriendDiv {
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        height: 290px;
+
+        input {
+            display: block;
+            width: 95%;
+            margin: 0 auto;
+        }
+    }
+
+    .friendList {
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+}
