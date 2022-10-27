@@ -127,9 +127,6 @@ function Friends() {
         }
     }
 
-    console.log(user)
-    console.log('friend', friendFound)
-
     return (
         <main className={styles2.lobbyMain}>
             <Header
@@ -195,12 +192,12 @@ function Friends() {
                                 <ul>
                                     <div className={styles.friendList}>
                                         {/* Dont show yourself as your friend */}
-                                        {friend.name === username
+                                        {friend.displayName === username
                                             ?
                                             <></>
                                             :
                                             <>
-                                                <li>{friend.name}</li>
+                                                <li>{friend.displayName}</li>
                                                 <button onClick={() => removeFriend(friend._id)}>Remove</button>
                                             </>
                                         }

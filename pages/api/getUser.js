@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const user = await User.findOne(
       { name: data.name },
     )
-    .populate('friends', 'name');
+    .populate('friends', 'displayName');
     res.json({ user });
   } catch (error) {
     console.log(error);
