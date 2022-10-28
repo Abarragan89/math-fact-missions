@@ -11,7 +11,7 @@
   margin-top: 0;
   padding-top: 30px;
   font-size: 3rem;
-  color: #f7ff0f;
+  color: gold;
 }
 .homepageMain .homePageImage {
   padding-bottom: 200px;
@@ -61,6 +61,15 @@
   display: inline;
   position: relative;
   z-index: 99;
+}
+.homepageMain .message {
+  color: rgb(1, 137, 1);
+  font-size: 0.9em;
+  text-align: center;
+  width: 90%;
+  margin: 50px auto 0;
+  border-top: 1px solid rgb(1, 137, 1);
+  padding-top: 20px;
 }
 @-webkit-keyframes mover {
   0% {

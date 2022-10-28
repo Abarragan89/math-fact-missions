@@ -78,6 +78,15 @@
         position: relative;
         z-index: 99;
     }
+    .message {
+        color: $green;
+        font-size: .9em;
+        text-align: center;
+        width: 90%;
+        margin: 50px auto 0;
+        border-top: 1px solid $green;
+        padding-top: 20px;
+    }
 
     @-webkit-keyframes mover {
         0% {

@@ -23,14 +23,13 @@ a {
   line-height: 40px;
   font-size: 20px;
   color: white;
-  border: 1px solid #333;
+  border: 1px solid transparent;
   text-align: center;
   position: relative;
-  transition: all 0.18s;
   border-radius: 4px;
   background-color: #004e86;
-  box-shadow: 5px 5px 0px 3px #f7ff0f;
-  transition: 0.18s;
+  box-shadow: 5px 5px 0px 3px gold;
+  transition: ease-in 0.15s;
 }
 
 .mainButton span {
@@ -44,7 +43,7 @@ a {
   font-size: 0.75em;
 }
 
-.mainButton:after {
+.mainButton::after {
   position: absolute;
   border-radius: 3px;
   content: "";
@@ -52,29 +51,21 @@ a {
   left: 0;
   width: 0;
   height: 100%;
-  background: rgb(98, 98, 98);
-  transition: all 0.18s;
+  background: rgb(94, 90, 90);
+  transition: ease-in 0.18s;
 }
 
 .mainButton:hover {
-  background-color: rgb(98, 98, 98);
+  background-color: rgb(94, 90, 90);
 }
 
-.mainButton:hover span {
-  color: #f7ff0f;
-}
-
-.mainButton:hover:after {
+.mainButton:hover::after {
   width: 100.1%;
-}
-
-.mainButton:active:after {
-  height: 0;
 }
 
 .mainButton:active {
   transform: translate(0.2em, 0.2em);
-  box-shadow: 3px 3px 0px #f7ff0f;
+  box-shadow: 3px 3px 0px gold;
 }
 
 /* main heading styles */

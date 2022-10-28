@@ -6,13 +6,17 @@ export default async function handler(req, res) {
         // run this code to order finalHighscore
         if (req.query.gameType === 'finalHighscore') {
             const data = req.query
-            console.log(data)
+            console.log('data', data)
             await connectMongo();
             const gameLevel = `games.${data.operation}.${data.gameType}`
-            const user = await User.find({})
-                .select(`${[gameLevel]} displayName -_id`)
-                .sort({ [gameLevel]: -1 })
-                .limit(10)
+            const user = await User.findOne(
+                { name: data.name },
+            )
+                .populate({
+                    path: 'friends',
+                    options: { sort: { [gameLevel]: -1 } }
+                })
+            .select('friends')
             console.log('user', user)
             res.json({ user });
 

@@ -105,7 +105,7 @@ function Friends() {
                                 <option value="game1Highscore">Alien Invasion</option>
                                 <option value="game2Highscore">Space Race</option>
                                 <option value="game3Highscore">Apocolypse</option>
-                                <option value="finalHighscore">Final Score</option>
+                                <option value="finalHighscore">Final Battle</option>
                             </select>
                             <select onChange={(e) => {
                                 setRankings(null);
@@ -125,7 +125,7 @@ function Friends() {
                                 <option value="11">12</option>
                             </select>
                         </div>
-                        <button type='submit'>Get Ranks</button>
+                        <button type='submit'>Launch</button>
                     </form>
                     <div className={styles.scoreBoard}>
                         {rankings &&
@@ -163,7 +163,7 @@ function Friends() {
                                     <option value="game1Highscore">Alien Invasion</option>
                                     <option value="game2Highscore">Space Race</option>
                                     <option value="game3Highscore">Apocolypse</option>
-                                    <option value="finalHighscore">Final Score</option>
+                                    <option value="finalHighscore">Final Battle</option>
                                 </select>
                                 <select onChange={(e) => {
                                     setRankings(null);
@@ -183,7 +183,7 @@ function Friends() {
                                     <option value="11">12</option>
                                 </select>
                             </div>
-                            <button type='submit'>Get Ranks</button>
+                            <button type='submit'>Launch</button>
                         </form>
                         <div className={styles.scoreBoard}>
                             {rankings &&

@@ -26,14 +26,13 @@ a {
   line-height: 40px;
   font-size: 20px;
   color: white;
-  border: 1px solid #333;
+  border: 1px solid transparent;
   text-align: center;
   position: relative;
-  transition: all .18s;
   border-radius: 4px; 
   background-color: $tertiaryColor;
   box-shadow: 5px 5px 0px 3px $secondaryColor;
-  transition: .18s;
+  transition: ease-in .15s;
 }
 
 .mainButton span{
@@ -49,7 +48,7 @@ a {
 
 }
 
-.mainButton:after {
+.mainButton::after {
   position: absolute;
   border-radius: 3px;
   content: "";
@@ -58,22 +57,19 @@ a {
   width: 0;
   height: 100%;
   background: $accentColor;
-  transition: all .18s;
+  transition: ease-in .18s;
 }
 
 .mainButton:hover{
   background-color: $accentColor;
 }
-.mainButton:hover span{
-  color: $secondaryColor;
-}
 
-.mainButton:hover:after{
+.mainButton:hover::after{
   width: 100.1%;
 }
-.mainButton:active:after {
-  height: 0;
-}
+// .mainButton:active:after {
+//   height: 0;
+// }
 .mainButton:active {
   transform: translate(.2em, .2em);
   box-shadow: 3px 3px 0px $secondaryColor;

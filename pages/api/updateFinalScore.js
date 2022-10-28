@@ -4,11 +4,13 @@ import User from '../../models/user';
 export default async function handler(req, res) {
   try {
     const data = req.body
-    const updateString = `games.${data.operation}.finalHighscore`
+    console.log(data)
+    const updateString = `games.${data.gameType}.finalHighscore`
     await connectMongo();
+    console.log(updateString)
     const user = await User.findOneAndUpdate(
       { displayName: data.username },
-      { $set: {[updateString]: data.highscore }}
+      {[updateString]: data.highscore }
     );
 
     res.json({ user });

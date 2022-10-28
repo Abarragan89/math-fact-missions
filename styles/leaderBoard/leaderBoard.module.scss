@@ -26,6 +26,14 @@
         color: $offWhite;
         border-radius: 5px;
         border: 2px solid $green;
+        transition: .25s;
+    }
+    button:hover {
+        cursor: pointer;
+        background-color: $green;
+    }
+    button:active {
+        border-radius: 8px;
     }
 }
 
@@ -50,14 +58,22 @@
     
 
     .scoreboardRow {
+        color: $accentColor;
         font-size: 1.2em;
-        border: 1px solid white;
-        // background-color: $accentColor;
+        border: 2px solid $green;
+        border-radius: 4px;
         margin-bottom: 20px;
     }
     .scoreboardRow:first-child {
-        color: gold;
+        color: rgb(255, 242, 0);
     }
+    .scoreboardRow:nth-child(2) {
+        color: rgb(207, 204, 204);
+    }
+    .scoreboardRow:nth-child(3) {
+        color: rgb(193, 123, 4);
+    }
+    
     
 
 }
