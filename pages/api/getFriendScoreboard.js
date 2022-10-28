@@ -6,7 +6,6 @@ export default async function handler(req, res) {
         // run this code to order finalHighscore
         if (req.query.gameType === 'finalHighscore') {
             const data = req.query
-            console.log('data', data)
             await connectMongo();
             const gameLevel = `games.${data.operation}.${data.gameType}`
             const user = await User.findOne(
@@ -17,13 +16,11 @@ export default async function handler(req, res) {
                     options: { sort: { [gameLevel]: -1 } }
                 })
             .select('friends')
-            console.log('user', user)
             res.json({ user });
 
             // run this to order any of the game highscores
         } else {
             const data = req.query
-            console.log('data in friend', data)
             await connectMongo();
             const gameLevel = `games.${data.operation}.${data.gameType}.${data.level}`
             const user = await User.findOne(
@@ -35,11 +32,10 @@ export default async function handler(req, res) {
                 })
             .select('friends')
 
-            console.log('user', user)
             res.json({ user });
         }
     } catch (error) {
-        console.log('error', error.code);
+        console.log(error)
         res.send({ successful: false })
     }
 

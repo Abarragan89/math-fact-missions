@@ -40,8 +40,6 @@ function Friends() {
         setRankings(fullfilledPromise)
     }
 
-    console.log(rankings)
-
     ////////////////// friend scoreboard  Logic///////////
     // Get user Data from indexedDB first so users can't hack into mongo through URL
     // if name exists in indexedDB, then access mongoDB
