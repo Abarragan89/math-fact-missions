@@ -148,6 +148,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                         maxLength={18}
                         type='text'
                         ref={inputEl}
+                        pattern="/^[A-Za-z][A-Za-z0-9_]{7,29}$/"
                     />
                 </form>
                 <br />
