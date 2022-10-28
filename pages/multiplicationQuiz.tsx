@@ -72,7 +72,7 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
 
     // problem timer works better with useRef since it has to quickly reset and hold value
     const problemTimer = useRef<number>(100);
-    const [mainTimer, setMainTimer] = useState<number>(30);
+    const [mainTimer, setMainTimer] = useState<number>(100);
     const [currentScore, setCurrentScore] = useState<number>(0);
 
     // Set up numbers and answers
