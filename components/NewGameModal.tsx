@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import styles from '../styles/newGameModal/newGameModal.module.css';
 import styles2 from '../styles/chooseGame/chooseGame.module.css';
 import useSound from 'use-sound';
-const path = require('path');
 
 
 function NewGameModal({ modalTriggered, setModalTriggered }) {
@@ -103,6 +102,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
 
     // add user to MongoDB database
     async function newUserToMongo(name: string, e) {
+        const nameRegex = /[A-Za-z0-9_]{5,29}$/
         name = name.trim();
         if (e) {
             e.preventDefault()
@@ -111,8 +111,14 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
             setIsSuccessful(false)
             inputEl.current.select();
             errorText.current.innerHTML = 'You need to enter a name';
-
-        } else {
+            return
+        } 
+        const isValid = name.match(nameRegex)
+        if (isValid === null) {
+            errorText.current.innerHTML = 'Only Alphanumeric characters and underscores(_) are allowed. Name must be at least 4 characeters long.';
+            return
+        }
+        else {
             // check to see if name is available in Database
             const fetchRequest = await fetch(`/api/addNewUser`, {
                 method: "POST",
@@ -148,7 +154,6 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
                         maxLength={18}
                         type='text'
                         ref={inputEl}
-                        pattern="/^[A-Za-z][A-Za-z0-9_]{7,29}$/"
                     />
                 </form>
                 <br />
