@@ -123,7 +123,7 @@ function Friends() {
                                 <option value="11">12</option>
                             </select>
                         </div>
-                        <button type='submit'>Launch</button>
+                        <button onClick={() => play()} type='submit'>Launch</button>
                     </form>
                     <div className={styles.scoreBoard}>
                         {rankings &&
@@ -181,7 +181,7 @@ function Friends() {
                                     <option value="11">12</option>
                                 </select>
                             </div>
-                            <button type='submit'>Launch</button>
+                            <button onClick={() => play()}  type='submit'>Launch</button>
                         </form>
                         <div className={styles.scoreBoard}>
                             {rankings &&

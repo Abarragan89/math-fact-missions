@@ -158,7 +158,14 @@ function Friends() {
                                         ?
                                         <>
                                             <p className={styles.foundFriend}>{friend.displayName}</p>
-                                            <button className={styles.addFriendBtn} onClick={() => addFriend(user.user, friend._id)}>Add</button>
+                                            {friend._id === user.user._id
+                                                ?
+                                                <p className={styles.friendOptionText}>(You)</p>
+                                                :
+                                                <button className={styles.addFriendBtn} onClick={() => addFriend(user.user, friend._id)}>
+                                                    <MdAddCircle />
+                                                </button>
+                                            }
                                         </>
                                         :
                                         <>
