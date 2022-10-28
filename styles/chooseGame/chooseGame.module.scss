@@ -34,12 +34,15 @@
     width:fit-content;
     border-radius: 5px;
     font-size: 1.15em;
-    transition: .2s;
+    transition: .3s;
+    background-color: $transparentGreen;
 }
 .hollowBtn:hover {
     cursor: pointer;
     background-color: $green;
-    
+}
+.hollowBtn:active {
+    border-radius: 10px;
 }
 
 .controlPanelButtons {

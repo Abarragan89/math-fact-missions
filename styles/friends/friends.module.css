@@ -1,29 +1,109 @@
 /* Global colors */
-.friendList li {
-  margin-top: 10px;
-  color: white;
-  list-style: none;
-}
-.friendList h2 {
-  margin: 10px 10px 0;
-  color: #f7ff0f;
+.friendMain {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 50px;
 }
 
+.friendList {
+  padding: 0;
+}
+.friendList .friendItem {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid rgb(1, 137, 1);
+  padding: 10px;
+  border-radius: 5px;
+}
+.friendList .friendItem:hover {
+  background-color: rgb(1, 137, 1);
+}
+.friendList li {
+  color: white;
+  list-style: none;
+  margin: 0 10px;
+  font-size: 1.2em;
+}
+.friendList button {
+  color: rgb(232, 232, 232);
+  border: none;
+  background-color: transparent;
+  font-size: 1.4em;
+}
+.friendList button:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.searchFriendDiv {
+  padding: 20px;
+  border-radius: 5px;
+  border: 2px solid rgb(1, 137, 1);
+  height: 300px;
+}
 .searchFriendDiv input {
-  font-size: 1.1em;
+  display: block;
+  margin: 0 20px 10px;
   padding: 5px;
-  background-color: rgb(98, 98, 98);
-  color: #f7ff0f;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  border-radius: 4px;
+  outline: rgb(1, 137, 1);
+  background-color: rgb(232, 232, 232);
+  border: none;
+  color: rgb(1, 137, 1);
+  font-weight: bold;
+  font-family: "Space Mono", monospace;
 }
 .searchFriendDiv p {
   color: white;
-  margin-left: 5px;
+  margin: 20px 0 5px;
+  font-size: 1.1em;
+}
+.searchFriendDiv p:first-child {
+  margin-right: 20px;
 }
 .searchFriendDiv .addFriendBtn {
   margin: 10px 0;
+  background-color: transparent;
+  border: none;
+  color: rgb(1, 137, 1);
+  font-size: 1.7em;
+}
+.searchFriendDiv .addFriendBtn:hover {
+  cursor: pointer;
+  color: white;
+}
+.searchFriendDiv .friendOptionText {
+  color: gold;
 }
 
 .subtitle {
   margin-top: 0;
   color: white;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 675px) {
+  .friendMain {
+    flex-direction: column;
+  }
+  .searchFriendDiv {
+    padding: 20px 10px;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    height: 290px;
+  }
+  .searchFriendDiv input {
+    display: block;
+    width: 95%;
+    margin: 0 auto;
+  }
+  .friendList {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
 }/*# sourceMappingURL=friends.module.css.map */

@@ -10,7 +10,7 @@ export default async function handler(req, res) {
             { name: { $regex: regex } },
         )
         .select('displayName')
-        .limit(8)
+        .limit(4)
         res.json({ user });
     } catch (error) {
         console.log(error);

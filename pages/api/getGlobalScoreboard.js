@@ -12,7 +12,6 @@ export default async function handler(req, res) {
         .select(`${[gameLevel]} displayName -_id`)
         .sort({ [gameLevel]: -1 })
         .limit(10)
-      console.log('user', user)
       res.json({ user });
 
     // run this to order any of the game highscores
@@ -27,7 +26,7 @@ export default async function handler(req, res) {
       res.json({ user });
     }
   } catch (error) {
-    console.log('error', error.code);
+    console.log(error);
     res.send({ successful: false })
   }
 

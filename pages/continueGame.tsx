@@ -97,7 +97,7 @@ function ContinueGame() {
                     />
                     <Link href='/'><p onClick={() => play()} className={styles2.hollowBtn}>Back</p></Link>
                     {activeGameData.map((data: any, index: number) => (
-                        <div key={index} className={`${styles.continueGameDiv} flex-box-sb`}>
+                        <div key={index} className={`${styles.continueGameDiv} flex-box-sb-wrap`}>
                             <div className={`${styles.gameInfoDiv} flex-box-sb-wrap`}>
                                 <p>{data.display_name}</p>
                             </div>

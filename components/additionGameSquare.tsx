@@ -14,8 +14,8 @@ function AdditionGameSquare({
                     className={`${styles.lobbySquare} ${styles.disabledSquare}`}
                     disabled
                 >
-                    {numberRange > 100 ?
-                        <span>Final Level</span>
+                    {numberRange > 90 ?
+                        <span>Final Battle</span>
                         :
                         <span>{`1 - ${numberRange}`}</span>
                     }

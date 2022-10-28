@@ -219,6 +219,12 @@ const userSchema = new Schema({
             ref: 'User'
         }
     ],
+    messages: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Messages'
+        }
+    ],
 
 });
 

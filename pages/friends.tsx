@@ -6,6 +6,8 @@ import styles2 from '../styles/gameLobby/gameLobby.module.css';
 import styles3 from '../styles/chooseGame/chooseGame.module.css';
 import Header from '../components/Header';
 import useSound from 'use-sound';
+import { FaTrash } from 'react-icons/fa';
+import { MdAddCircle } from 'react-icons/md'
 
 function Friends() {
     // Set up Sound
@@ -135,11 +137,13 @@ function Friends() {
             />
             <Link href={`/welcomePage?username=${username}`}><p onClick={() => play()} className={styles3.hollowBtn}>Back</p></Link>
 
-            <div className='flex-box-sa'>
+            <div className={styles.friendMain}>
                 {/* Search Div */}
                 <div className={styles.searchFriendDiv}>
                     <input
                         onChange={(e) => searchFriends(e)}
+                        placeholder="search users"
+                        maxLength={18}
                         type="text"
                         ref={inputEl}
                     />
@@ -158,22 +162,24 @@ function Friends() {
                                         </>
                                         :
                                         <>
-                                            {user.user.friends.find(obj => obj._id === friend._id) && !friend._id === user.user._id ?
+                                            {user.user.friends.find(obj => obj._id === friend._id) && friend._id !== user.user._id ?
                                                 <>
                                                     <p className={styles.foundFriend}>{friend.displayName}</p>
-                                                    <p>Friended</p>
+                                                    <p className={styles.friendOptionText}>Friend</p>
                                                 </>
                                                 :
                                                 friend._id === user.user._id
                                                     ?
                                                     <>
                                                         <p className={styles.foundFriend}>{friend.displayName}</p>
-                                                        <p>(You)</p>
+                                                        <p className={styles.friendOptionText}>(You)</p>
                                                     </>
                                                     :
                                                     <>
                                                         <p className={styles.foundFriend}>{friend.displayName}</p>
-                                                        <button className={styles.addFriendBtn} onClick={() => addFriend(user.user, friend._id)}>Add</button>
+                                                        <p className={styles.addFriendBtn} onClick={() => addFriend(user.user, friend._id)}>
+                                                            <MdAddCircle />
+                                                        </p>
                                                     </>
                                             }
                                         </>
@@ -189,17 +195,19 @@ function Friends() {
                     {user &&
                         user.user.friends.map((friend, index: number) =>
                             <div key={index}>
-                                <ul>
-                                    <div className={styles.friendList}>
+                                <ul className={styles.friendList}>
+                                    <div>
                                         {/* Dont show yourself as your friend */}
                                         {friend.displayName === username
                                             ?
                                             <></>
                                             :
-                                            <>
+                                            <div className={styles.friendItem}>
                                                 <li>{friend.displayName}</li>
-                                                <button onClick={() => removeFriend(friend._id)}>Remove</button>
-                                            </>
+                                                <button onClick={() => removeFriend(friend._id)}>
+                                                    <FaTrash />
+                                                </button>
+                                            </div>
                                         }
                                     </div>
                                 </ul>

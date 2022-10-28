@@ -35,7 +35,7 @@ function WelcomePage() {
                     <span>Ranks</span>
                     </p></Link>
                 <Link href={`/friends?username=${username}`}><p onClick={() => play()} className='mainButton'>
-                    <span>Friends</span>
+                    <span>Find Friends</span>
                     </p></Link>
             </div>
 

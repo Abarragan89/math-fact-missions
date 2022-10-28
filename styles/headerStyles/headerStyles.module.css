@@ -8,7 +8,7 @@
   text-align: center;
   font-size: 1.9em;
   margin-bottom: 20px;
-  color: #f7ff0f;
+  color: gold;
   text-transform: capitalize;
 }
 .header p {
@@ -21,6 +21,6 @@
   font-size: 1.8em;
 }
 .header p:hover {
-  color: rgb(98, 98, 98);
+  color: rgb(94, 90, 90);
   cursor: pointer;
 }/*# sourceMappingURL=headerStyles.module.css.map */

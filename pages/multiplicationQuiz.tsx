@@ -23,8 +23,8 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
     const [playProblemTimerExpired] = useSound('/sounds/problemTimerExpired.wav');
     const [playCorrectAnswer] = useSound('/sounds/correctAnswer.wav')
     const [playIncorrectAnswer] = useSound('/sounds/wrongAnswer.wav')
-    const [winningScore, setWinningScore] = useState<number>(20000)
-
+    // const [winningScore, setWinningScore] = useState<number>(20000)
+    const [winningScore, setWinningScore] = useState<number>(2)
 
     // Data from Context API
     const { numberRange } = useContext(AppContext)
@@ -73,7 +73,7 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
 
     // problem timer works better with useRef since it has to quickly reset and hold value
     const problemTimer = useRef<number>(100);
-    const [mainTimer, setMainTimer] = useState<number>(100);
+    const [mainTimer, setMainTimer] = useState<number>(30);
     const [currentScore, setCurrentScore] = useState<number>(0);
 
     // Set up numbers and answers
@@ -267,6 +267,7 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
             },
             body: JSON.stringify({
                 username,
+                gameType,
                 operation,
                 highscore: currentScore
             }),

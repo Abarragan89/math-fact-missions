@@ -541,7 +541,6 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
                             <p>Highscore:{highscore}</p>
                         </div>
                     </div>
-                    <button onClick={addGameScoresToMongoDB}>Test Query</button>
                 </main>
 
             }

@@ -11,7 +11,7 @@
   padding-top: 10px;
   margin-bottom: 0;
   text-align: center;
-  color: #f7ff0f;
+  color: gold;
 }
 .mainQuiz .quitBtn {
   margin-bottom: 0;
@@ -45,7 +45,7 @@
   border: none;
   font-size: 1.2em;
   border-radius: 8px;
-  color: #f7ff0f;
+  color: gold;
   font-weight: bold;
   width: 30%;
   background-color: rgba(67, 224, 67, 0.507);
@@ -65,14 +65,14 @@
   width: 330px;
 }
 .mainQuiz progress::-webkit-progress-bar {
-  background-color: rgb(98, 98, 98);
+  background-color: rgb(94, 90, 90);
   height: 8px;
 }
 .mainQuiz progress::-webkit-progress-value {
-  background-color: #f7ff0f;
+  background-color: gold;
 }
 .mainQuiz progress::-moz-progress-bar {
-  background-color: rgb(98, 98, 98);
+  background-color: rgb(94, 90, 90);
 }
 .mainQuiz .numberPad {
   color: black;
@@ -92,7 +92,7 @@
   display: inline-block;
 }
 .mainQuiz .numberPad:active {
-  background-color: #f7ff0f;
+  background-color: gold;
 }
 .mainQuiz .highScore {
   text-align: center;
@@ -100,7 +100,7 @@
   margin-top: 0;
 }
 .mainQuiz .highScore span {
-  color: #f7ff0f;
+  color: gold;
   font-size: 1.2em;
 }
 .mainQuiz .deleteBtn {

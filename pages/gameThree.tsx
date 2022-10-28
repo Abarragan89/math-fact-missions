@@ -6,6 +6,7 @@ import EndTrainingModal from '../components/endTrainingModal';
 import Astroid from '../assets/astroid';
 import styles from '../styles/gameOne/gameOne.module.css';
 import styles2 from '../styles/gameThree/gameThree.module.css'
+import styles3 from '../styles/chooseGame/chooseGame.module.css';
 import NumberSwiper from '../components/numberSwiper';
 import Missle from '../assets/missle';
 import BigExplosion from '../assets/bigExplosion';
@@ -581,7 +582,7 @@ function GameThree({ wrongAlien, explosion, planetExplosion, stopMusic }) {
                 <main className={styles.mainStudyPage}>
                     <div className='flex-box-sa'>
                         <p>Score: {score.current}</p>
-                        <p className={`${styles.hollowBtn} ${styles.quitBtn}`}
+                        <p className={`${styles3.hollowBtn} ${styles.quitBtn}`}
                             onClick={() => {
                                 stopMusic();
                                 window.location.reload();
