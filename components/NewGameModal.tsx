@@ -115,7 +115,7 @@ function NewGameModal({ modalTriggered, setModalTriggered }) {
         } 
         const isValid = name.match(nameRegex)
         if (isValid === null) {
-            errorText.current.innerHTML = 'Only Alphanumeric characters and underscores(_) are allowed. Name must be at least 4 characeters long.';
+            errorText.current.innerHTML = 'Only Alphanumeric characters and underscores(_) are allowed. Name must be at least 5 characeters long.';
             return
         }
         else {

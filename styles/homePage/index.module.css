@@ -67,9 +67,9 @@
   font-size: 0.9em;
   text-align: center;
   width: 90%;
-  margin: 50px auto 0;
+  margin: 100px auto 0;
   border-top: 1px solid rgb(1, 137, 1);
-  padding-top: 20px;
+  padding-top: 10px;
 }
 @-webkit-keyframes mover {
   0% {

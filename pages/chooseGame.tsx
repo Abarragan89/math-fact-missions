@@ -1,5 +1,4 @@
 import Header from '../components/Header';
-import styles from '../styles/chooseGame/chooseGame.module.css';
 import { CgMathPlus } from 'react-icons/cg';
 import { CgMathDivide } from 'react-icons/cg';
 import { CgMathMinus } from 'react-icons/cg';
@@ -7,6 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles2 from '../styles/gameLobby/gameLobby.module.css';
+import styles from '../styles/chooseGame/chooseGame.module.css';
 import useSound from 'use-sound';
 
 function ChooseGame() {
