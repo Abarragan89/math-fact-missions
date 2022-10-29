@@ -37,6 +37,7 @@ a {
 
 .mainButton span{
   position: relative;
+  white-space: nowrap;
   z-index: 2;
   font-family: 'Space Mono', monospace;
 
@@ -67,9 +68,7 @@ a {
 .mainButton:hover::after{
   width: 100.1%;
 }
-// .mainButton:active:after {
-//   height: 0;
-// }
+
 .mainButton:active {
   transform: translate(.2em, .2em);
   box-shadow: 3px 3px 0px $secondaryColor;

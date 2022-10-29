@@ -34,6 +34,7 @@ a {
 
 .mainButton span {
   position: relative;
+  white-space: nowrap;
   z-index: 2;
   font-family: "Space Mono", monospace;
 }
