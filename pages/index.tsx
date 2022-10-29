@@ -62,7 +62,14 @@ function HomePage() {
                         onClick={() => play()}
                     ><span>Continue</span></button>
                 </Link>
-                <p className={styles.message}>Battle to progress through the levels. Train if you need practice. Final Battle scores and training scores are saved. See how you rank against other players or add friends to create a customized scoreboard!</p>
+                <br />
+                <Link href='/about'>
+                    <button
+                        className={`mainButton ${styles.homePageBtn}`}
+                        onClick={() => play()}
+                    ><span>About</span></button>
+                </Link>
+                <p className={styles.message}>Battle to progress through the levels. Train if you need practice. See how you rank against other players or add friends to create a customized scoreboard and become a math fact champion!</p>
             </main>
         </>
     )

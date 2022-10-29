@@ -32,7 +32,10 @@
         font-family: 'Space Mono', monospace;
     }
     .errorMsg {
+        display: block;
         color: rgb(226, 6, 6);
+        margin: 0 auto;
+        width: 85%;
     }
 
     .btn {

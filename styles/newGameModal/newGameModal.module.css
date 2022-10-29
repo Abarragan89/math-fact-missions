@@ -29,7 +29,10 @@
   font-family: "Space Mono", monospace;
 }
 .modalContainer .errorMsg {
+  display: block;
   color: rgb(226, 6, 6);
+  margin: 0 auto;
+  width: 85%;
 }
 .modalContainer .btn {
   background-color: transparent;
