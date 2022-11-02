@@ -6,20 +6,26 @@
     background-size: cover;
     min-height: 100vh;
     color: white;
+
+    .quitBtn {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 33px;
+      
+    }
     
     p {
         margin: 0;
-        padding-top: 5px;
         text-align: center;
-
     }
     .lives {
-        font-size: 1.5em;
+        font-size: 1.3em;
     }
     .problem{
-        font-size: 1.8em;
+        font-size: 1.7em;
         padding-top: 0;
         text-align: center;
+        height: 33px;
     }
 
     canvas {
@@ -37,7 +43,7 @@
         border-top: none;
         border-radius: 0 0 8px 8px;
         button {
-            padding: 7px 20px;
+            padding: 5px 20px;
             background-color: rgba(250, 24, 67, 0.507);
             display: inline-block;
             border: 1px solid black;
