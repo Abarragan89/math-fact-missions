@@ -9,6 +9,7 @@ import { AppContext } from '../AppContext';
 import EndTrainingModal from '../components/endTrainingModal';
 import Explosion from '../assets/explosion';
 import styles2 from '../styles/chooseGame/chooseGame.module.css';
+import styles3 from '../styles/gameThree/gameThree.module.css'
 
 
 
@@ -496,10 +497,11 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
                                 window.location.reload();
                             }}
                         >Abort</p>
+
                         <div className="flex-box-sb">
                             {lives.current.map((index) =>
                                 <p className={styles.lives} key={index}>🚀</p>
-                            )}
+                                )}
                         </div>
                     </div>
                     <p className={styles.problem}>
@@ -524,6 +526,7 @@ function GameOne({ wrongAlien, laserSound, destroyAlien, stopMusic }) {
                             </>
                         }
                     </p>
+                    <p className={styles3.message}>Use arrow keys & spacebar or slider & button</p>
                     <canvas width={360} height={500} ref={canvasRef} />
                     {/* Controls */}
                     <div className={`${styles.controls} flex-box-sb`}>
