@@ -73,6 +73,7 @@ function Friends() {
             }
         })
         const fullfilledPromise = await data.json()
+        console.log(fullfilledPromise)
         setRankings(fullfilledPromise)
     }
 
@@ -162,6 +163,7 @@ function Friends() {
                                     <option value="game2Highscore">Space Race</option>
                                     <option value="game3Highscore">Apocolypse</option>
                                     <option value="finalHighscore">Final Battle</option>
+                                    <option value="progress">Level Progress</option>
                                 </select>
                                 <select onChange={(e) => {
                                     setRankings(null);
@@ -190,6 +192,9 @@ function Friends() {
                                         <p>{index + 1}. {player.displayName}</p>
                                         {gameType === 'finalHighscore' ?
                                             <p>{player.games[operation][gameType]}</p>
+                                            :
+                                            gameType === 'progress' ?
+                                                <p>Level: {player.games[operation].level}</p>
                                             :
                                             <p>{player.games[operation][gameType][level]}</p>
                                         }

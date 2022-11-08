@@ -19,6 +19,20 @@ export default async function handler(req, res) {
             res.json({ user });
 
             // run this to order any of the game highscores
+        } else if(req.query.gameType === 'progress') {
+            const data = req.query
+            await connectMongo();
+            const gameLevel = `games.${data.operation}.level`
+            const user = await User.findOne(
+                { name: data.name },
+            )
+                .populate({
+                    path: 'friends',
+                    options: { sort: { [gameLevel]: -1 } }
+                })
+            .select('friends')
+            console.log(user)
+            res.json({ user });
         } else {
             const data = req.query
             await connectMongo();

@@ -8,7 +8,8 @@ export default async function handler(req, res) {
     await connectMongo();
     const user = await User.findOneAndUpdate(
       { displayName: data.username },
-      {[updateString]: data.highscore }
+      {[updateString]: data.highscore },
+      { new: true }
     );
 
     res.json({ user });
