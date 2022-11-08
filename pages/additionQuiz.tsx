@@ -185,7 +185,7 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
                 if (gameType === 'addition') {
                     const obj = ((event.target as IDBRequest).result);
                     // set the highscore or final highscore
-                    if(numberRange > 90) {
+                    if (numberRange > 90) {
                         obj.games[2].finalHighscore = currentScore
                         updateFinalHighscores()
                     } else {
@@ -199,13 +199,15 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
                         obj.games[2].level = Math.max(obj.games[2].level, possiblePromotion);
                         obj.games[2].level > 10 ? obj.games[2].level = 10 : obj.games[2].level = obj.games[2].level;
                         setPassed(true)
+                        // update operation level in Mongo
+                        updateOperationLevelMongo(obj.games[2].level)
                     }
                     objectStore.put(obj)
 
                 } else if (gameType === 'subtraction') {
                     const obj = ((event.target as IDBRequest).result);
                     // set the highscore or final highscore
-                    if(numberRange > 90) {
+                    if (numberRange > 90) {
                         obj.games[3].finalHighscore = currentScore
                         updateFinalHighscores()
                     } else {
@@ -219,11 +221,30 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
                         obj.games[3].level = Math.max(obj.games[3].level, possiblePromotion);
                         obj.games[3].level > 10 ? obj.games[3].level = 10 : obj.games[3].level = obj.games[3].level;
                         setPassed(true)
+                        // update operation level in Mongo
+                        updateOperationLevelMongo(obj.games[3].level)
                     }
                     objectStore.put(obj)
                 }
             }
         }
+    }
+
+    // update level in operation in Mongo if level passed
+    async function updateOperationLevelMongo(gameLevel: number) {
+        console.log('gameLevel', gameLevel)
+        await fetch(`/api/updateOperationLevel`, {
+            method: "PUT",
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                gameType,
+                gameLevel,
+            }),
+        })
     }
 
     // update Final Highscore to MongoDB 

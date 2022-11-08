@@ -217,6 +217,9 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
                         obj.games[0].level = Math.max(obj.games[0].level, possiblePromotion)
                         obj.games[0].level > 13 ? obj.games[0].level = 13 : obj.games[0].level = obj.games[0].level;
                         setPassed(true)
+                        // update operation level in Mongo
+                        updateOperationLevelMongo(obj.games[0].level)
+
                     }
                     objectStore.put(obj)
 
@@ -237,11 +240,30 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
                         obj.games[1].level = Math.max(obj.games[1].level, possiblePromotion)
                         obj.games[1].level > 13 ? obj.games[1].level = 13 : obj.games[1].level = obj.games[1].level;
                         setPassed(true)
+                        // update operation level in Mongo
+                        updateOperationLevelMongo(obj.games[1].level)
                     }
                     objectStore.put(obj)
                 }
             }
         }
+    }
+
+    // update level in operation in Mongo if level passed
+    async function updateOperationLevelMongo(gameLevel:number) {
+        console.log('gameLevel', gameLevel)
+        await fetch(`/api/updateOperationLevel`, {
+            method: "PUT",
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                gameType,
+                gameLevel,
+            }),
+        })
     }
 
     // update Final Highscore to MongoDB 
