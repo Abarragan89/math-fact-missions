@@ -115,6 +115,7 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
         problemTimerControl();
         mainTimerControl();
     }, [problemTrigger])
+    
 
 
     // check to see if the user reponse is correct. 
