@@ -251,7 +251,6 @@ function MultiplicationQuiz({ startGame, setStartGame, showModal, setShowModal, 
 
     // update level in operation in Mongo if level passed
     async function updateOperationLevelMongo(gameLevel:number) {
-        console.log('gameLevel', gameLevel)
         await fetch(`/api/updateOperationLevel`, {
             method: "PUT",
             headers:

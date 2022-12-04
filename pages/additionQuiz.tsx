@@ -232,7 +232,6 @@ function AdditionQuiz({ startGame, setStartGame, showModal, setShowModal, stopMu
 
     // update level in operation in Mongo if level passed
     async function updateOperationLevelMongo(gameLevel: number) {
-        console.log('gameLevel', gameLevel)
         await fetch(`/api/updateOperationLevel`, {
             method: "PUT",
             headers:
