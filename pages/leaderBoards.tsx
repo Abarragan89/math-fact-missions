@@ -73,7 +73,6 @@ function Friends() {
             }
         })
         const fullfilledPromise = await data.json()
-        console.log(fullfilledPromise)
         setRankings(fullfilledPromise)
     }
 
