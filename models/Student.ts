@@ -1,6 +1,6 @@
 import { Schema, model, models } from 'mongoose';
 
-const userSchema = new Schema({
+const studentSchema = new Schema({
     name: {
         type: String,
         require: true,
@@ -216,7 +216,7 @@ const userSchema = new Schema({
     friends: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'Student'
         }
     ],
     messages: [
@@ -228,6 +228,6 @@ const userSchema = new Schema({
 
 });
 
-const User = models.User || model('User', userSchema);
+const Student = models.Student || model('Student', studentSchema);
 
-export default User;
+export default Student;

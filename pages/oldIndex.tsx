@@ -11,9 +11,28 @@ function HomePage() {
     const [play] = useSound('/sounds/buttonClick.wav', {
         volume: .3
     })
+    useEffect(() => {
+        const indexedDB = window.indexedDB
+        // the result of this open isrequest.result is an instance of the database
+        const request = indexedDB.open('GameDatabase', 1);
+        request.onerror = (event: object) => {
+            console.error('An error occurred saving your game. Please allow IndexedDb.')
+            console.error(event);
+        }
+
+        // Schema
+        request.onupgradeneeded = () => {
+            const db = request.result;
+            const store = db.createObjectStore('activeGames', { keyPath: 'name' });
+            store.createIndex('display_name', 'display_name', {unique: true })
+            store.createIndex('name', 'name', { unique: true });
+            store.createIndex('games', ['games'])
+        }
+    }, [])
 
     const [initiateNewGame, setInitiateNewGame] = useState<boolean>(false)
     const [modalTriggered, setModalTriggered] = useState<Boolean>(false)
+
 
     return (
         <>
@@ -30,14 +49,12 @@ function HomePage() {
             <main className={styles.homepageMain}>
                 <h1>Math Fact Missions</h1>
                 <Image className={styles.homePageImage} src="/rocketShip.png" width="350px" height="250px" alt="spaceship blasting off into space"></Image> <br />
-                
                 <button className={`mainButton ${styles.homePageBtn}`}
                     onClick={() => {
                         play();
                         setInitiateNewGame(true);
                     }}
                 ><span>New Adventure</span></button>
-                
                 <br />
                 <Link href='/continueGame'>
                     <button
@@ -52,12 +69,6 @@ function HomePage() {
                         onClick={() => play()}
                     ><span>About</span></button>
                 </Link>
-                    <br /><br />
-                <form action="/api/practiceRoute">
-                    <input type="text" name="text"/>
-                    <button type="submit">submit</button>
-                </form>
-
                 <p className={styles.message}>Battle to progress through the levels. Train if you need practice. See how you rank against other players or add friends to create a customized scoreboard and become a math fact champion!</p>
             </main>
         </>

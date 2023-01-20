@@ -1,10 +1,10 @@
 import connectMongo from '../../utils/connectMongo';
-import User from '../../models/user';
+import Student from '../../models/Student';
 
 export default async function handler(req, res) {
   try {
     await connectMongo();
-    const user = await User.create({
+    const user = await Student.create({
       name: req.body.name,
       displayName: req.body.name
     });
