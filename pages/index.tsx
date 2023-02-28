@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/homePage/index.module.css';
 import useSound from 'use-sound';
-import NewGameModal from '../components/NewGameModal';
+
 
 function HomePage() {
 
@@ -39,12 +39,6 @@ function HomePage() {
             <Head>
                 <title>Math Fact Missions</title>
             </Head>
-            {initiateNewGame &&
-                <NewGameModal
-                    modalTriggered={initiateNewGame}
-                    setModalTriggered={setInitiateNewGame}
-                />
-            }
 
             <main className={styles.homepageMain}>
                 <h1>Math Fact Missions</h1>
