@@ -7,6 +7,18 @@
   background-size: cover;
   min-height: 100vh;
 }
+.homepageMain h3 {
+  font-size: 1.5em;
+  margin: 0 auto;
+  color: white;
+  width: 85%;
+}
+.homepageMain a {
+  text-decoration: underline;
+  color: gold;
+  display: inline-block;
+  margin: 0 10px;
+}
 .homepageMain h1 {
   margin-top: 0;
   padding-top: 30px;
@@ -47,6 +59,7 @@
 }
 .homepageMain .continueGameDiv h3 {
   font-size: 1.5em;
+  color: white;
 }
 .homepageMain .continueGameDiv button svg:hover {
   color: black;
@@ -56,7 +69,6 @@
   background-color: rgb(1, 137, 1);
 }
 .homepageMain img {
-  -webkit-animation: mover 2s infinite alternate;
   animation: mover 1s infinite alternate;
   display: inline;
   position: relative;
@@ -70,14 +82,6 @@
   margin: 100px auto 0;
   border-top: 1px solid rgb(1, 137, 1);
   padding-top: 10px;
-}
-@-webkit-keyframes mover {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(15px);
-  }
 }
 @keyframes mover {
   0% {

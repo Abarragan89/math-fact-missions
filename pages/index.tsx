@@ -24,7 +24,7 @@ function HomePage() {
         request.onupgradeneeded = () => {
             const db = request.result;
             const store = db.createObjectStore('activeGames', { keyPath: 'name' });
-            store.createIndex('display_name', 'display_name', {unique: true })
+            store.createIndex('display_name', 'display_name', { unique: true })
             store.createIndex('name', 'name', { unique: true });
             store.createIndex('games', ['games'])
         }
@@ -49,7 +49,7 @@ function HomePage() {
             <main className={styles.homepageMain}>
                 <h1>Math Fact Missions</h1>
                 <Image className={styles.homePageImage} src="/rocketShip.png" width="350px" height="250px" alt="spaceship blasting off into space"></Image> <br />
-                <button className={`mainButton ${styles.homePageBtn}`}
+                {/* <button className={`mainButton ${styles.homePageBtn}`}
                     onClick={() => {
                         play();
                         setInitiateNewGame(true);
@@ -69,7 +69,18 @@ function HomePage() {
                         onClick={() => play()}
                     ><span>About</span></button>
                 </Link>
-                <p className={styles.message}>Battle to progress through the levels. Train if you need practice. See how you rank against other players or add friends to create a customized scoreboard and become a math fact champion!</p>
+                <p className={styles.message}>Battle to progress through the levels. Train if you need practice. See how you rank against other players or add friends to create a customized scoreboard and become a math fact champion!</p> */}
+                <h3>We moved! Math Mission 2.0 is now available at   
+                <a href='https://www.math-fact-missions.com'>
+                 www.math-fact-missions.com.  
+                </a>
+                     Have your teacher make an account to try the new and improved version! </h3>
+                <Link href='https://www.math-fact-missions.com'>
+                    <button
+                        className={`mainButton ${styles.homePageBtn}`}
+                        onClick={() => play()}
+                    ><span> Go to new site </span></button>
+                </Link>
             </main>
         </>
     )
